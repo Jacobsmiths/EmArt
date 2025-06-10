@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+.dotpattern {
+    /* diameter of the circle */
+    --d: 1px;
+
+    background: radial-gradient(
+            circle at var(--d) var(--d),
+            #000 calc(var(--d) - 2px),
+            #0000 var(--d)
+        )
+        0 0 / 50px 50px;
+    background-color: white;
+}
+
+.outline {
+    color: #ff3cb2;
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
