@@ -45,6 +45,7 @@ const AdminPage = () => {
                     "Sold",
                     "For Sale",
                 ]}
+                isDatabaseForm={true}
             />
         </div>
     );

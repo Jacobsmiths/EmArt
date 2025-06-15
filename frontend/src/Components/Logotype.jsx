@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const Logotype = () => {
     return (
         <NavLink to="/">
-            <div className="flex items-center space-x-2 lg:mx-8 py-4  transition-all duration-300 ease-in-out">
+            <div className="group-hover:py-8 flex items-center space-x-2 lg:mx-8 py-4  transition-all duration-300 ease-in-out">
                 <img
                     className="max-h-[40px] w-atuo rounded-sm border border-black"
                     src="/src/assets/logo.jpg"

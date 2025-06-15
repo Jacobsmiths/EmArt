@@ -319,3 +319,4 @@
 /home/jacob/Documents/EmArt/backend/obj/Debug/net9.0/backend.genruntimeconfig.cache
 /home/jacob/Documents/EmArt/backend/obj/Debug/net9.0/ref/backend.dll
 /home/jacob/Documents/EmArt/backend/bin/Debug/net9.0/backend.staticwebassets.runtime.json
+/home/jacob/Documents/EmArt/backend/obj/Debug/net9.0/backend.sourcelink.json

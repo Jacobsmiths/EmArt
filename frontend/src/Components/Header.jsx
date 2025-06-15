@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import MobileNavBar from "./MobileNavBar";
 import NavBar from "./NavBar";
 import { useAuth } from "../Contexts/AuthContext";
-// hover:scale-x-120 hover:scale-y-200 overflow-visible
+
 const Header = () => {
-    //drop-shadow-[0_1.1px_1.1px_rgba(1,1,1,1)]
     const navTabClass =
         "relative overflow-hidden text-[#ff3cb2] group-hover:py-8 text-xl font-bold py-6 px-2 transition-all duration-300 font-[helvetica]";
     const navTabItems = ["Current", "About", "Login", "Register"];
