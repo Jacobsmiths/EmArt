@@ -35,18 +35,7 @@ const AdminPage = () => {
         <div className="grid grid-cols-[minmax(300px,1400px)] justify-center p-4">
             <h1 className="text-center font-bold text-2xl p-4">Admin Page</h1>
             <div className="text-lg font-bold pb-4">All Paintings</div>
-            <AdminForm
-                elements={paintings}
-                headers={[
-                    "Painting",
-                    "Description",
-                    "Price",
-                    "Height x Width",
-                    "Sold",
-                    "For Sale",
-                ]}
-                isDatabaseForm={true}
-            />
+            <AdminForm paintings={paintings} setPaintings={setPaintings} />
         </div>
     );
 };

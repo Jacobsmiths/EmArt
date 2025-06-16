@@ -1,73 +1,87 @@
-import React, { useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
+import React from "react";
+import { Form, Input } from "./Form";
 
-const AddToDatabase = ({ className, ref, columns }) => {
-    const el = useRef(null);
-    const {
-        register,
-        watch,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
-
+const AddToDatabase = ({
+    className,
+    ref,
+    columns,
+    addToPaintings,
+    ...props
+}) => {
     return (
-        <form className={className} ref={ref} style={columns}>
-            <input
-                className="p-3 w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder={"Name"}
-                {...register("name")}
+        <Form
+            className={`grid grid-cols-2 gap-y-4 gap-x-8 px-12 py-8 ${className} border rounded-2xl w-full max-w-3xl
+              [&>label]:text-right [&>label]:pr-4 [&>input]:col-span-1 [&>select]:col-span-1
+              [&>button]:col-span-2 items-center`}
+            ref={ref}
+            onSubmit={(data) => {
+                props.onHandleSubmit();
+                addToPaintings(data);
+            }}
+        >
+            <label>Painting</label>
+            <Input
+                className="w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Name"
+                name="name"
+                requirements
             />
-            <input
-                className="p-3 w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                {...register("description")}
+
+            <label>Description</label>
+            <Input
+                className="w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Description"
+                name="description"
             />
-            <input
-                className="p-3 w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+            <label>Price</label>
+            <Input
                 type="number"
-                {...register("price")}
+                className="w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Price"
+                name="price"
             />
-            <input
-                className="p-3 w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                {...register("size")}
-                placeholder="H x W"
+
+            <label>Size</label>
+            <Input
+                className="w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="HxW"
+                name="size"
             />
-            <div className="p-3 flex items-center justify-center">
-                <input
-                    type="checkbox"
-                    defaultChecked={false}
-                    {...register("sold")}
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                />
-            </div>
-            <div className="p-3 flex items-center justify-center">
-                <input
-                    type="checkbox"
-                    defaultChecked={true}
-                    {...register("forSale")}
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                />
-            </div>
-            <div className="p-3">
-                <input
-                    type="file"
-                    multiple
-                    accept="image/*"
-                    {...register("images")}
-                    className="w-full text-sm"
-                />
-            </div>
-            <div className="p-3 flex items-center justify-center">
-                <button
-                    type="button"
-                    onClick={() => deleteFunc(id)}
-                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors"
-                >
-                    Add
-                </button>
-            </div>
-        </form>
+
+            <label>Sold</label>
+            <Input
+                type="checkbox"
+                defaultChecked={false}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                name="sold"
+            />
+
+            <label>For Sale</label>
+            <Input
+                type="checkbox"
+                defaultChecked={true}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                name="forSale"
+            />
+
+            <label>Images</label>
+            <Input
+                type="file"
+                multiple
+                accept="image/*"
+                className="col-span-1 w-full text-sm"
+                name="images"
+            />
+
+            <label></label>
+            <button
+                type="submit"
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-sm transition-colors justify-self-center"
+            >
+                Add
+            </button>
+        </Form>
     );
 };
 

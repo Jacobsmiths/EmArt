@@ -3,27 +3,43 @@ import { useForm } from "react-hook-form";
 import AddToDatabase from "./AddToDatabase";
 import useClickedOutside from "../hooks/useClickedOutside";
 
-const AdminForm = ({
-    headers,
-    elements,
-    addFunc,
-    deleteFunc,
-    isDatabaseForm,
-}) => {
-    const allHeaders = [...headers, "Images", "Actions"];
-    const [isEditing, setIsEditing] = useState(false);
+const AdminForm = ({ paintings, setPaintings }) => {
+    const headers = [
+        "Painting",
+        "Description",
+        "Price",
+        "Height x Width",
+        "Sold",
+        "For Sale",
+        "Images",
+        "Actions",
+    ];
+
+    const columns = {
+        display: "grid",
+        gridTemplateColumns: "1.5fr 1.5fr 100px 120px 70px 70px 1fr 100px",
+    };
+
     const {
         register,
         watch,
         handleSubmit,
         formState: { errors },
     } = useForm();
+
     const addPaintingRef = useRef(null);
     const { focused, setFocused } = useClickedOutside(addPaintingRef);
 
-    const columns = {
-        display: "grid",
-        gridTemplateColumns: "1.5fr 1.5fr 80px 120px 60px 60px 1fr 100px",
+    const addToPaintings = (painting) => {
+        const format = painting.size.trim();
+        const fart = {
+            ...painting,
+            size: {
+                height: format.split("x")[0],
+                width: format.split("x")[1],
+            },
+        };
+        setPaintings([...paintings, fart]);
     };
 
     const onSubmit = (data) => {
@@ -32,11 +48,15 @@ const AdminForm = ({
 
     const focusFormInput = () => {
         return (
-            <div className="fixed inset-0 left-0 w-full h-full bg-black/50 flex items-center justify-center p-20 z-50">
+            <div className="fixed inset-0 left-0 w-full h-full bg-black/50 flex items-center justify-center p-10 z-50">
                 <AddToDatabase
                     className={"bg-white "}
                     ref={addPaintingRef}
                     columns={columns}
+                    addToPaintings={addToPaintings}
+                    onHandleSubmit={() => {
+                        setFocused(false);
+                    }}
                 />
             </div>
         );
@@ -50,7 +70,7 @@ const AdminForm = ({
                     className="bg-gray-300 divide-x divide-black overflow-hidden"
                     style={columns}
                 >
-                    {allHeaders.map((header, index) => (
+                    {headers.map((header, index) => (
                         <div
                             key={index}
                             className="p-3 text-center font-bold bg-gray-200 border-b border-gray-300"
@@ -63,48 +83,48 @@ const AdminForm = ({
                 {focused && focusFormInput()}
 
                 {/* Data Rows */}
-                {elements.map(
+                {paintings.map(
                     (
-                        { id, name, description, price, size, sold, forSale },
+                        { name, description, price, size, sold, forSale },
                         index
                     ) => {
                         const bg = index % 2 === 0 ? "bg-gray-50" : "bg-white";
                         return (
                             <div
-                                key={id}
+                                key={index}
                                 style={columns}
                                 className={`${bg} border-b divide-x divide-gray-200 border-gray-200 overflow-clip`}
                             >
                                 <input
                                     className="p-3 w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     defaultValue={name}
-                                    {...register(`name${id}`)}
+                                    {...register(`name${index}`)}
                                     placeholder="Name"
                                 />
                                 <input
                                     className="p-3 w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     defaultValue={description}
-                                    {...register(`description${id}`)}
+                                    {...register(`description${index}`)}
                                     placeholder="Description"
                                 />
                                 <input
                                     className="p-3 w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     type="number"
                                     defaultValue={price}
-                                    {...register(`price${id}`)}
+                                    {...register(`price${index}`)}
                                     placeholder="Price"
                                 />
                                 <input
                                     className="p-3 w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     defaultValue={`${size.height} x ${size.width}`}
-                                    {...register(`size${id}`)}
-                                    placeholder="H x W"
+                                    {...register(`size${index}`)}
+                                    placeholder="HxW"
                                 />
                                 <div className="p-3 flex items-center justify-center">
                                     <input
                                         type="checkbox"
                                         defaultChecked={sold}
-                                        {...register(`sold${id}`)}
+                                        {...register(`sold${index}`)}
                                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                                     />
                                 </div>
@@ -112,7 +132,7 @@ const AdminForm = ({
                                     <input
                                         type="checkbox"
                                         defaultChecked={forSale}
-                                        {...register(`forSale${id}`)}
+                                        {...register(`forSale${index}`)}
                                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                                     />
                                 </div>
@@ -120,7 +140,7 @@ const AdminForm = ({
                                     <input
                                         type="file"
                                         multiple={true}
-                                        {...register(`images${id}`)}
+                                        {...register(`images${index}`)}
                                         className="w-full text-xs"
                                         accept="image/*"
                                     />
@@ -128,7 +148,7 @@ const AdminForm = ({
                                 <div className="p-3 flex items-center justify-center">
                                     <button
                                         type="button"
-                                        onClick={() => deleteFunc(id)}
+                                        onClick={() => deleteFunc(index)}
                                         className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
                                     >
                                         Delete
