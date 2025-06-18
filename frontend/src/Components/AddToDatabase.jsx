@@ -1,83 +1,160 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input } from "./Form";
 
 const AddToDatabase = ({
     className,
-    ref,
     columns,
-    addToPaintings,
+    onSubmit,
+    defaultValues,
     ...props
 }) => {
+    const [images, setImages] = useState([]);
+    const [imageOrder, setImageOrder] = useState([]);
+
     return (
         <Form
-            className={`grid grid-cols-2 gap-y-4 gap-x-8 px-12 py-8 ${className} border rounded-2xl w-full max-w-3xl
-              [&>label]:text-right [&>label]:pr-4 [&>input]:col-span-1 [&>select]:col-span-1
-              [&>button]:col-span-2 items-center`}
-            ref={ref}
+            className={`bg-white p-8 shadow-md rounded-xl w-full max-w-2xl mx-auto space-y-6 ${className}`}
             onSubmit={(data) => {
-                props.onHandleSubmit();
-                addToPaintings(data);
+                onSubmit(data);
+                setImages(imageOrder);
             }}
+            defaultValues={defaultValues}
         >
-            <label>Painting</label>
-            <Input
-                className="w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Name"
-                name="name"
-                requirements
-            />
+            <label className="flex flex-col gap-1">
+                <span className="font-medium">Painting</span>
+                <Input
+                    className="input"
+                    placeholder="Name"
+                    name="name"
+                    requirements={{ required: "...um you forgot a name" }}
+                />
+            </label>
 
-            <label>Description</label>
-            <Input
-                className="w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Description"
-                name="description"
-            />
+            <label className="flex flex-col gap-1">
+                <span className="font-medium">Description</span>
+                <Input
+                    className="input"
+                    placeholder="Description"
+                    name="description"
+                    requirements={{ required: "add a description bruh" }}
+                />
+            </label>
 
-            <label>Price</label>
-            <Input
-                type="number"
-                className="w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Price"
-                name="price"
-            />
+            <label className="flex flex-col gap-1">
+                <span className="font-medium">Price</span>
+                <Input
+                    type="number"
+                    className="input w-32"
+                    placeholder="Price"
+                    name="price"
+                    requirements={{ required: "yo you forgot a price" }}
+                />
+            </label>
 
-            <label>Size</label>
-            <Input
-                className="w-full bg-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="HxW"
-                name="size"
-            />
+            <label className="flex flex-col gap-1">
+                <span className="font-medium">Size</span>
+                <Input
+                    className="input w-40"
+                    placeholder="HxW"
+                    name="size"
+                    requirements={{
+                        required: "u forgot to add the size",
+                        pattern: {
+                            value: /^\d+\s*x\s*\d+$/,
+                            message: "must be of the form num x num e.g.(5x20)",
+                        },
+                    }}
+                />
+            </label>
 
-            <label>Sold</label>
-            <Input
-                type="checkbox"
-                defaultChecked={false}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                name="sold"
-            />
+            <div className="flex gap-6">
+                <label className="flex items-center gap-2">
+                    <Input
+                        type="checkbox"
+                        defaultChecked={false}
+                        className="checkbox"
+                        name="sold"
+                    />
+                    <span className="text-sm">Sold</span>
+                </label>
 
-            <label>For Sale</label>
-            <Input
-                type="checkbox"
-                defaultChecked={true}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                name="forSale"
-            />
+                <label className="flex items-center gap-2">
+                    <Input
+                        type="checkbox"
+                        defaultChecked={true}
+                        className="checkbox"
+                        name="forSale"
+                    />
+                    <span className="text-sm">For Sale</span>
+                </label>
+            </div>
 
-            <label>Images</label>
-            <Input
-                type="file"
-                multiple
-                accept="image/*"
-                className="col-span-1 w-full text-sm"
-                name="images"
-            />
+            <label className="flex flex-col gap-1">
+                <span className="font-medium">Images</span>
+                <Input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    className="text-sm"
+                    name="images"
+                    onChange={(e) => {
+                        const files = Array.from(e.target.files);
+                        setImages(files);
+                    }}
+                />
+            </label>
 
-            <label></label>
+            {images.length > 0 && (
+                <div className="flex flex-col gap-2 mt-4">
+                    <span className="font-medium">Select Images in Order:</span>
+                    <div className="grid grid-cols-2 gap-2">
+                        {images.map((image, index) => (
+                            <label
+                                key={index}
+                                className="flex items-center gap-2"
+                            >
+                                <Input
+                                    type="checkbox"
+                                    className="checkbox"
+                                    value={image.name}
+                                    name={image.name}
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            setImageOrder((prev) => [
+                                                ...prev,
+                                                image,
+                                            ]);
+                                        } else {
+                                            setImageOrder((prev) =>
+                                                prev.filter(
+                                                    (el) =>
+                                                        el.name !== image.name
+                                                )
+                                            );
+                                        }
+                                    }}
+                                />
+                                <span className="text-sm">{image.name}</span>
+                            </label>
+                        ))}
+                    </div>
+                    {imageOrder.length > 0 && (
+                        <div className="text-sm text-gray-600 mt-2">
+                            <strong>Order:</strong>{" "}
+                            {imageOrder.map((image, idx) => (
+                                <span key={idx} className="mr-1">
+                                    {image.name}
+                                    {idx < imageOrder.length - 1 ? "," : ""}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )}
+
             <button
                 type="submit"
-                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-sm transition-colors justify-self-center"
+                className="w-fit self-center bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md text-sm transition-colors"
             >
                 Add
             </button>

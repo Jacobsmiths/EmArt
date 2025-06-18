@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-function useClickedOutside(ref) {
-    const [focused, setFocused] = useState(false);
+function useClickedOutside(ref, initial = false) {
+    const [focused, setFocused] = useState(initial);
 
     useEffect(() => {
         const checkClick = (e) => {
@@ -15,7 +15,7 @@ function useClickedOutside(ref) {
         };
     }, [ref]);
 
-    return { focused, setFocused };
+    return [focused, setFocused];
 }
 
 export default useClickedOutside;
