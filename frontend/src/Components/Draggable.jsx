@@ -5,6 +5,7 @@ const Draggable = ({
     className,
     currentRef,
     onDrag,
+    draggable,
     style,
     id,
     startingPos,
@@ -120,6 +121,7 @@ const Draggable = ({
 
     // Set up event listeners
     useEffect(() => {
+        if (!draggable) return;
         if (isDragging) {
             document.addEventListener("mousemove", handleMouseMove, {
                 passive: false,

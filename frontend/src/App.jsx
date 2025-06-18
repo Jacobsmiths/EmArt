@@ -19,6 +19,7 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import CartPage from "./Pages/CartPage";
 import FooterlessLayout from "./Layouts/FooterlessLayout";
 import RegisterPage from "./Pages/RegisterPage";
+import AboutPage from "./Pages/AboutPage";
 // import { loadStripe } from "@stripe/stripe-js";
 // const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
@@ -35,11 +36,12 @@ const App = () => {
                 </Route>
                 <Route path="/" element={<FooterlessLayout />}>
                     <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="checkout" element={<CheckoutPage />} />
+                    <Route path="login" element={<LoginPage />} />
                     <Route element={<AdminRoutes />}>
                         <Route path="/admin" element={<AdminPage />} />
                     </Route>
-                    <Route path="checkout" element={<CheckoutPage />} />
-                    <Route path="login" element={<LoginPage />} />
                 </Route>
             </>
         )

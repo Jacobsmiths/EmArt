@@ -155,6 +155,7 @@ const Minimap = ({
                 style={{
                     width: `${viewWidth}px`,
                 }}
+                draggable={true}
             />
             {Object.values(pictureData).map((painting) => (
                 <div
