@@ -5,6 +5,7 @@ const AddToDatabase = ({
     className,
     columns,
     onSubmit,
+    onDelete,
     defaultValues,
     ...props
 }) => {
@@ -15,8 +16,9 @@ const AddToDatabase = ({
         <Form
             className={`bg-white p-8 shadow-md rounded-xl w-full max-w-2xl mx-auto space-y-6 ${className}`}
             onSubmit={(data) => {
-                onSubmit(data);
-                setImages(imageOrder);
+                onSubmit({ ...data, images: imageOrder });
+
+                // setImages(imageOrder);
             }}
             defaultValues={defaultValues}
         >
@@ -116,6 +118,7 @@ const AddToDatabase = ({
                                 <Input
                                     type="checkbox"
                                     className="checkbox"
+                                    requirements={{ required: "*" }}
                                     value={image.name}
                                     name={image.name}
                                     onChange={(e) => {
@@ -151,13 +154,23 @@ const AddToDatabase = ({
                     )}
                 </div>
             )}
-
-            <button
-                type="submit"
-                className="w-fit self-center bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md text-sm transition-colors"
-            >
-                Add
-            </button>
+            <div className="flex justify-between">
+                <button
+                    type="submit"
+                    className="w-fit self-center bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md text-sm transition-colors"
+                >
+                    Add
+                </button>
+                <button
+                    type="button"
+                    className="w-fit self-center bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md text-sm transition-colors"
+                    onClick={(data) => {
+                        onDelete(data);
+                    }}
+                >
+                    Delete
+                </button>
+            </div>
         </Form>
     );
 };

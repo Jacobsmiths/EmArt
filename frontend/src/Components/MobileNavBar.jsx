@@ -3,15 +3,14 @@ import { BiMenu } from "react-icons/bi";
 import { useState, useEffect } from "react";
 import { IoIosClose } from "react-icons/io";
 import { NavLink } from "react-router-dom";
-import Logotype from "./Logotype";
+import useClickedOutside from "../hooks/useClickedOutside";
 
-const MobileNavBar = ({ navTabClass, navTabItems, props }) => {
-    const [showingMenu, setShowingMenu] = useState(false);
+const MobileNavBar = ({ navTabClass, navTabItems, className, ...props }) => {
     const mobileMenuRef = useRef();
-
-    const toggleShowingMenu = () => {
-        setShowingMenu(!showingMenu);
-    };
+    const [showMobileNav, setShowMobileNav] = useClickedOutside(
+        mobileMenuRef,
+        false
+    );
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -30,40 +29,50 @@ const MobileNavBar = ({ navTabClass, navTabItems, props }) => {
     }, []);
 
     return (
-        <div ref={mobileMenuRef}>
-            <div className={props}>
-                {/* Website Title and Logo */}
-                <Logotype />
-                {/* Navigation Links Mobile View */}
-                <div className="block md:hidden">
-                    <button onClick={toggleShowingMenu}>
-                        {showingMenu ? (
-                            <IoIosClose className="text-white" size={28} />
-                        ) : (
-                            <BiMenu className="text-white" size={28} />
-                        )}
-                    </button>
-                </div>
-            </div>
-            <div
-                className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-                    showingMenu
-                        ? "max-h-20 opacity-100 translate-y-0"
-                        : "max-h-0 opacity-0 -translate-y-2"
-                }`}
-            >
-                <div className="flex flex-row items-center justify-between mt-4">
-                    {navTabItems.map((link, index) => {
-                        return (
+        <div>
+            <div className={className}>
+                <div
+                    className={`fixed inset-0 z-50 bg-black/50 transition-opacity duration-300 ${
+                        showMobileNav
+                            ? "opacity-100 pointer-events-auto"
+                            : "opacity-0 pointer-events-none"
+                    }`}
+                >
+                    <div
+                        ref={mobileMenuRef}
+                        className={`antioutline fixed right-0 top-0 h-full w-[100px] bg-gray-100 shadow-lg p-4 flex flex-col gap-4 transform transition-transform duration-300 ${
+                            showMobileNav ? "translate-x-0" : "translate-x-full"
+                        }`}
+                    >
+                        <div className="flex justify-center text-2xl font-bold">
+                            Menu
+                        </div>
+                        <div className="border"></div>
+                        {navTabItems.map((item, index) => (
                             <NavLink
                                 key={index}
-                                to={`/${link.toLowerCase()}`}
-                                className={navTabClass}
+                                to={`/${item.toLowerCase()}`}
+                                className={` transition ${navTabClass}`}
+                                onClick={() => setShowMobileNav(false)}
                             >
-                                {link}
+                                {item}
                             </NavLink>
-                        );
-                    })}
+                        ))}
+                    </div>
+                </div>
+
+                <div className="flex md:hidden">
+                    <button
+                        onClick={() => {
+                            setShowMobileNav((prev) => !prev);
+                        }}
+                    >
+                        {showMobileNav ? (
+                            <IoIosClose className="text-pink-500" size={28} />
+                        ) : (
+                            <BiMenu className="text-pink-500" size={28} />
+                        )}
+                    </button>
                 </div>
             </div>
         </div>

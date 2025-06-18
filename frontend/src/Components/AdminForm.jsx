@@ -36,13 +36,21 @@ const AdminForm = ({ paintings, setPaintings }) => {
                 height: format.split("x")[0],
                 width: format.split("x")[1],
             },
+            file: painting.images.map((image) => {
+                return image.name;
+            }),
         };
+        console.log(fart);
         setPaintings([...paintings, fart]);
     };
 
     // difference between this and addToPaintings is that these gaurenteed to have ids
     const onSubmit = (data) => {
         console.log("Form data:", data);
+    };
+
+    const onDelete = (data) => {
+        console.log(data);
     };
 
     const paintingForm = (painting) => {
@@ -68,6 +76,10 @@ const AdminForm = ({ paintings, setPaintings }) => {
                                 ...painting,
                                 size: `${painting.size.height} x ${painting.size.width}`,
                             }}
+                            onDelete={(data) => {
+                                setPaintingFormFocused(false);
+                                onDelete(data);
+                            }}
                         />
                     ) : (
                         <AddToDatabase
@@ -75,6 +87,10 @@ const AdminForm = ({ paintings, setPaintings }) => {
                             onSubmit={(data) => {
                                 setPaintingFormFocused(false);
                                 addToPaintings(data);
+                            }}
+                            onDelete={(data) => {
+                                setPaintingFormFocused(false);
+                                onDelete(data);
                             }}
                         />
                     )}
@@ -113,7 +129,7 @@ const AdminForm = ({ paintings, setPaintings }) => {
                                 size,
                                 sold,
                                 forSale,
-                                images,
+                                filePaths,
                             } = painting;
                             const bg =
                                 index % 2 === 0 ? "bg-gray-50" : "bg-white";
@@ -147,8 +163,8 @@ const AdminForm = ({ paintings, setPaintings }) => {
                                         ></span>
                                     </td>
                                     <td className="p-3 text-center text-gray-600 text-sm">
-                                        {images?.length > 0
-                                            ? `${images}`
+                                        {filePaths?.length > 0
+                                            ? `${filePaths}`
                                             : "No images"}
                                     </td>
                                     <td className="p-3 text-center">

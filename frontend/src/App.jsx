@@ -3,6 +3,7 @@ import {
     createBrowserRouter,
     createRoutesFromElements,
     RouterProvider,
+    Navigate,
 } from "react-router-dom";
 import MainLayout from "./Layouts/MainLayout";
 import HomePage from "./Pages/HomePage";
@@ -30,6 +31,7 @@ const App = () => {
                     <Route path="cart" element={<CartPage />} />
                     <Route path="painting/:id" element={<PaintingPage />} />
                     <Route path="*" element={<NotFoundPage />} />
+                    <Route path="/home" element={<Navigate to="/" />} />
                 </Route>
                 <Route path="/" element={<FooterlessLayout />}>
                     <Route path="/register" element={<RegisterPage />} />

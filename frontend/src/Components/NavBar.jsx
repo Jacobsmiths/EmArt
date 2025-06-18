@@ -1,28 +1,22 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Logotype from "./Logotype";
 
-const NavBar = ({ navTabClass, navTabItems, className }) => {
+const NavBar = ({ navTabClass = "", navTabItems = [], className = "" }) => {
     return (
-        <div className="grid grid-cols-1 max-w-[1200px] w-full h-full mx-auto">
-            <div className="hidden md:flex justify-between ">
-                <Logotype />
-                <div className="flex space-x-6 lg:mx-8 items-center relative h-full">
-                    {navTabItems.map((link, index) => {
-                        return (
-                            <NavLink
-                                key={index}
-                                to={`/${link.toLowerCase()}`}
-                                className={`${navTabClass} relative overflow-hidden h-full items-center before:content-[''] before:absolute before:inset-0 before:bg-black before:transform before:-translate-y-full before:transition-transform before:duration-300 before:ease-in-out hover:before:translate-y-0`}
-                            >
-                                {/* Text content */}
-                                <span className="relative z-10 pt-8">
-                                    {link}
-                                </span>
-                            </NavLink>
-                        );
-                    })}
-                </div>
+        <div
+            className={`hidden md:flex justify-between items-center ${className}`}
+        >
+            <div className="flex items-center justify-center h-full relative">
+                {navTabItems.map((link, index) => (
+                    <NavLink
+                        key={index}
+                        to={`/${link.toLowerCase()}`}
+                        className={`relative h-full flex items-center justify-center overflow-hidden group ${navTabClass}`}
+                    >
+                        <span className="absolute inset-0 bg-black transform -translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0"></span>
+                        <span className="relative z-10 px-4">{link}</span>
+                    </NavLink>
+                ))}
             </div>
         </div>
     );
