@@ -54,38 +54,34 @@ const GalleryView = ({
 
     const galleryPaintings = () => {
         return Object.values(pictureData).map((painting) => (
-            <>
-                <Draggable
-                    key={`${painting.id}`}
-                    id={painting.id}
-                    onDrag={(x, y, id) => {
-                        onDrag(x, y, id);
+            <Draggable
+                key={`${painting.id}`}
+                id={painting.id}
+                onDrag={(x, y, id) => {
+                    onDrag(x, y, id);
+                }}
+                startingPos={{ x: painting.x, y: painting.y }}
+                draggable={
+                    isAuthenticated == true &&
+                    userRoles.includes("Administrator")
+                        ? true
+                        : false
+                }
+            >
+                <GalleryPainting
+                    painting={painting}
+                    className="absolute bg-black"
+                    container={galleryRef}
+                    style={{
+                        height: `${
+                            (painting.height * INCH_TO_PIXELS) / PAINTING_SCALE
+                        }px`,
+                        width: `${
+                            (painting.width * INCH_TO_PIXELS) / PAINTING_SCALE
+                        }px`,
                     }}
-                    startingPos={{ x: painting.x, y: painting.y }}
-                    draggable={
-                        isAuthenticated == true &&
-                        userRoles.includes("Administrator")
-                            ? true
-                            : false
-                    }
-                >
-                    <GalleryPainting
-                        painting={painting}
-                        className="absolute bg-black"
-                        container={galleryRef}
-                        style={{
-                            height: `${
-                                (painting.height * INCH_TO_PIXELS) /
-                                PAINTING_SCALE
-                            }px`,
-                            width: `${
-                                (painting.width * INCH_TO_PIXELS) /
-                                PAINTING_SCALE
-                            }px`,
-                        }}
-                    />
-                </Draggable>
-            </>
+                />
+            </Draggable>
         ));
     };
 

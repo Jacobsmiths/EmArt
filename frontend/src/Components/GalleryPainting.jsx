@@ -79,7 +79,7 @@ const GalleryPainting = ({ painting, className, style, ...props }) => {
             </NavLink>
             {showPopUp && (
                 <div
-                    className="fixed z-10 text-black p-1 rounded-lg text-sm border-1 border-black bg-gray-100/90 text-right pointer-events-none"
+                    className="fixed z-10  text-right pointer-events-none"
                     style={{
                         left: mousePos.x,
                         top: mousePos.y - 25,

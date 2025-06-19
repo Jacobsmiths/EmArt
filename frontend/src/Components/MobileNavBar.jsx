@@ -12,22 +12,6 @@ const MobileNavBar = ({ navTabClass, navTabItems, className, ...props }) => {
         false
     );
 
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (
-                mobileMenuRef.current &&
-                !mobileMenuRef.current.contains(e.target)
-            ) {
-                setShowingMenu(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
     return (
         <div>
             <div className={className}>

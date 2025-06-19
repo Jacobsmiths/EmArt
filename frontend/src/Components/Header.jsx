@@ -8,9 +8,15 @@ import { NavLink } from "react-router-dom";
 
 const Header = () => {
     const navTabClass =
-        "relative text-[#ff3cb2] hover:text-pink-600 transition-discrete duration-300 text-xl font-bold font-[helvetica]";
-    const navTabItems = ["Home", "Portfolio", "About", "Login", "Register"];
-    const adminNavTabItems = ["Home", "Portfolio", "About", "Login", "Admin"];
+        "hover:text-pink-600 transition-discrete duration-300 font-[helvetica] text-xl";
+    const navTabItems = ["Gallery", "Portfolio", "About", "Login", "Register"];
+    const adminNavTabItems = [
+        "Gallery",
+        "Portfolio",
+        "About",
+        "Login",
+        "Admin",
+    ];
     const [backgroundPosition, setBackgroundPosition] = useState(0);
     const { isAuthenticated, userRoles } = useAuth();
 

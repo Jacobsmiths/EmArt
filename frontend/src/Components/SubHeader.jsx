@@ -7,10 +7,13 @@ const SubHeader = ({ backRef }) => {
             <div className="grid grid-cols-[minmax(100px,1100px)] mt-4 px-4">
                 <div className="flex  justify-between flex-row">
                     <NavLink className="font-black" to={backRef}>
-                        <div>Back</div>
+                        <div className="hover:underline">Back</div>
                     </NavLink>
-                    <NavLink to="/cart" className="">
-                        <FaShoppingCart className="mx-4" />
+                    <NavLink
+                        to="/cart"
+                        className=" p-2 rounded-xl hover:bg-gray-300"
+                    >
+                        <FaShoppingCart className="" />
                     </NavLink>
                 </div>
             </div>
