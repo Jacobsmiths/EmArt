@@ -70,7 +70,6 @@ const GalleryView = ({
             >
                 <GalleryPainting
                     painting={painting}
-                    className="absolute bg-black"
                     container={galleryRef}
                     style={{
                         height: `${
@@ -87,7 +86,7 @@ const GalleryView = ({
 
     return (
         <div
-            className={`relative overflow-x-auto z-10  ${className}`}
+            className={`relative overflow-auto z-10  ${className}`}
             ref={galleryViewRef}
             {...props}
             style={{

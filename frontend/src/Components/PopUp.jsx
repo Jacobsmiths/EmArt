@@ -1,23 +1,28 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence } from "motion/react";
 
-const PopUpMessage = ({ message }) => {
-    return (
-        <div className="text-black p-1 rounded-lg text-sm border-1 border-black bg-gray-100/90">
-            {message}
-        </div>
-    );
-};
-
-const PopUp = ({ message = "testing", disabled, children }) => {
+const PopUp = ({ message, disabled = false, children, ...props }) => {
     const [showPopUp, setShowPopUp] = useState(false);
     const [popUpPos, setPopUpPos] = useState({ x: 0, y: 0 });
     const containerRef = useRef(null);
-    const popup = PopUpMessage(message);
+    const messageRef = useRef(null);
+
+    const updatePos = (xPos, yPos, callback) => {
+        if (!messageRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const mes = messageRef.current.getBoundingClientRect();
+
+        setPopUpPos({
+            y: yPos - rect.top - mes.height - 15,
+            x: xPos - rect.left - mes.width / 2,
+        });
+        if (callback) callback();
+    };
 
     const handleMouseEnter = (e) => {
-        if (disabled) return;
-        updatePos(e.clientX, e.clientY);
-        setShowPopUp(true);
+        updatePos(e.clientX, e.clientY, () => {
+            setShowPopUp(true);
+        });
     };
     const handleMouseExit = () => {
         setShowPopUp(false);
@@ -27,31 +32,31 @@ const PopUp = ({ message = "testing", disabled, children }) => {
         updatePos(e.clientX, e.clientY);
     };
 
-    const updatePos = (xPos, yPos) => {
-        if (!showPopUp) return;
-        const rect = containerRef.current.getBoundingClientRect();
-        setPopUpPos({
-            y: yPos - rect.top,
-            x: xPos - rect.left,
-        });
-    };
-
     return (
         <div
-            className="relative"
+            className={`relative ${props.className}`}
             ref={containerRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseExit}
             onMouseMove={handleMouseOver}
         >
-            {showPopUp && (
-                <div
-                    className="absolute z-10"
-                    style={{ left: popUpPos.x, top: popUpPos.y }}
-                >
-                    {popup}
-                </div>
-            )}
+            <div ref={messageRef} className="absolute invisible">
+                message
+            </div>
+            <AnimatePresence>
+                {showPopUp && !disabled && (
+                    <motion.div
+                        style={{ left: popUpPos.x, top: popUpPos.y }}
+                        initial={{ scale: 0, opacity: 0 }}
+                        exit={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className={`text-black p-1 rounded-sm text-sm border-1 border-black bg-gray-100/90 absolute z-20 
+                        }`}
+                    >
+                        {message}
+                    </motion.div>
+                )}
+            </AnimatePresence>
             {children}
         </div>
     );

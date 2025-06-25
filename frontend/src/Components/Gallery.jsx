@@ -5,7 +5,7 @@ import GalleryView from "./GalleryView";
 import Draggable from "./Draggable";
 
 const Gallery = () => {
-    const GALLERY_HEIGHT = 550;
+    const GALLERY_HEIGHT = 650;
     const GALLERY_WIDTH = 2500;
     const PAINTING_SCALE = 8;
     const MINIMAP_SCALE = 15;
@@ -48,6 +48,7 @@ const Gallery = () => {
                 x: 25,
                 y: 25,
                 id: 1,
+                sold: false,
             },
             2: {
                 filepath: "./test2.jpg",
@@ -57,6 +58,7 @@ const Gallery = () => {
                 x: 100,
                 y: 125,
                 id: 2,
+                sold: true,
             },
         });
     }, []);
@@ -84,7 +86,7 @@ const Gallery = () => {
         <>
             <GalleryView
                 galleryViewRef={galleryViewRef}
-                className="w-8/9  "
+                className="w-full "
                 galleryStyle={{
                     width: `${GALLERY_WIDTH}px`,
                     height: `${GALLERY_HEIGHT}px`,

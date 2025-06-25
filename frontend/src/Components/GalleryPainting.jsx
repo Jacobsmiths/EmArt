@@ -2,64 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const GalleryPainting = ({ painting, className, style, ...props }) => {
-    const [showPopUp, setShowPopUp] = useState(false);
     const [hasDragged, setHasDragged] = useState(false);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-    const paintingRef = useRef();
-
-    const handlePopUp = (e) => {
-        setShowPopUp(true);
-        setMousePos({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleClosePopUp = (e) => {
-        setShowPopUp(false);
-    };
-
-    const handleMouseMove = (e) => {
-        setHasDragged(true);
-        if (showPopUp) {
-            setMousePos({ x: e.clientX, y: e.clientY });
-        }
-    };
-
-    useEffect(() => {
-        const img = paintingRef.current;
-        if (!img) return;
-
-        const handleMouseDown = () => setHasDragged(false);
-
-        img.addEventListener("mousedown", handleMouseDown);
-        img.addEventListener("mousemove", handleMouseMove);
-
-        return () => {
-            img.removeEventListener("mousedown", handleMouseDown);
-            img.removeEventListener("mousemove", handleMouseMove);
-        };
-    }, [showPopUp]);
-
-    useEffect(() => {
-        if (!paintingRef.current) return;
-
-        paintingRef.current.addEventListener("mouseenter", handlePopUp);
-        paintingRef.current.addEventListener("mouseleave", handleClosePopUp);
-        return () => {
-            if (paintingRef.current) {
-                paintingRef.current.removeEventListener(
-                    "mouseenter",
-                    handlePopUp
-                );
-                paintingRef.current.removeEventListener(
-                    "mouseleave",
-                    handleClosePopUp
-                );
-            }
-        };
-    }, []);
 
     return (
-        <div className="flex flex-col ">
+        <div
+            className="border-2 border-transparent hover:border-pink-400"
+            style={style}
+            onMouseDown={() => setHasDragged(false)}
+            onMouseMove={() => setHasDragged(true)}
+        >
             <NavLink
                 to={`/painting/${painting.id}`}
                 onClick={(e) => {
@@ -69,25 +20,20 @@ const GalleryPainting = ({ painting, className, style, ...props }) => {
                     }
                 }}
             >
-                <img
-                    src={painting.filepath}
-                    {...props}
-                    draggable="false"
-                    style={style}
-                    ref={paintingRef}
-                />
-            </NavLink>
-            {showPopUp && (
-                <div
-                    className="fixed z-10  text-right pointer-events-none"
-                    style={{
-                        left: mousePos.x,
-                        top: mousePos.y - 25,
-                    }}
-                >
-                    {painting.name}
+                <div className="z-10 bg-black/30 inset font-extrabold text-2xl text-white w-full h-full relative">
+                    <img
+                        src={painting.filepath}
+                        {...props}
+                        draggable="false"
+                        className="h-full w-full object-fill"
+                    />
+                    {painting.sold && (
+                        <div className="absolute left-0 top-0 w-full h-full flex justify-center items-center text-2xl font-extrabold text-white bg-black/50 z-60">
+                            SOLD
+                        </div>
+                    )}
                 </div>
-            )}
+            </NavLink>
         </div>
     );
 };

@@ -4,8 +4,8 @@ import Header from "../Components/Header";
 
 const FooterlessLayout = () => {
     return (
-        <div className="h-screen flex flex-col">
-            <Header className="" />
+        <div className="h-screen w-full flex flex-col">
+            <Header />
             <main className="grow flex-1 bg-gray-100">
                 <Outlet />
             </main>

@@ -4,11 +4,9 @@ import MobileNavBar from "./MobileNavBar";
 import NavBar from "./NavBar";
 import { useAuth } from "../Contexts/AuthContext";
 import Logotype from "./Logotype";
-import { NavLink } from "react-router-dom";
-
 const Header = () => {
     const navTabClass =
-        "hover:text-pink-600 transition-discrete duration-300 font-[helvetica] text-xl";
+        "text-[#ff3cb2] hover:text-pink-600 transition-discrete duration-300 font-[helvetica] text-xl";
     const navTabItems = ["Gallery", "Portfolio", "About", "Login", "Register"];
     const adminNavTabItems = [
         "Gallery",
@@ -27,7 +25,7 @@ const Header = () => {
     return (
         <nav
             className={
-                "outline transition-discrete duration-300 w-full h-20 hover:h-28"
+                "outline transition-discrete duration-300 w-full h-20 hover:h-28 min-h-16"
             }
         >
             <div
