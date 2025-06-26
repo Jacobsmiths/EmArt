@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router";
 import PopUp from "../Components/PopUp";
-import { animate, AnimatePresence, motion } from "motion/react";
-import useClickedOutside from "../hooks/useClickedOutside";
-import MultiImageDisplay from "../Components/MultiImageDisplay";
+import { AnimatePresence, motion } from "motion/react";
 import { RiArrowDropRightLine, RiArrowDropLeftLine } from "react-icons/ri";
 
 const PortfolioTile = ({ painting }) => {
