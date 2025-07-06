@@ -72,3 +72,4 @@ class PortfolioPainting(models.Model):
 
     def __str__(self):
         return f"Portfolio paintings: {self.paintings}"
+    
