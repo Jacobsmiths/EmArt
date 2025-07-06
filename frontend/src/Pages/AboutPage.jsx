@@ -2,7 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import FolderImages from "../Components/ImageCarousel";
 
-const Folder = ({ color = "#ffcf80", items = [], className = "" }) => {
+const Folder = ({
+    color = "#ffcf80",
+    items = [],
+    className = "",
+    size = 1,
+}) => {
     const maxItems = 3;
     const papers = items.slice(0, maxItems);
     while (papers.length < maxItems) {
@@ -31,11 +36,13 @@ const Folder = ({ color = "#ffcf80", items = [], className = "" }) => {
     const getFolderState = (open) => {
         return open
             ? { transform: `scale(1) translateY(300px)` }
-            : { transform: `scale(3) translateY(-20px)` };
+            : { transform: `scale(${size}) translateY(-20px)` };
     };
 
     return (
-        <div className="relative w-full h-full flex justify-center items-center">
+        <div
+            className={`relative w-full h-full flex justify-center items-center ${className}`}
+        >
             <AnimatePresence>
                 {open && (
                     <motion.div
@@ -54,13 +61,13 @@ const Folder = ({ color = "#ffcf80", items = [], className = "" }) => {
                         >
                             X
                         </button>
-                        <FolderImages />
+                        <FolderImages baseWidth={size * 150} />
                     </motion.div>
                 )}
             </AnimatePresence>
             <div
                 style={getFolderState(open)}
-                className={`transition-all absolute duration-200 ease-in-out ${className}`}
+                className={`transition-all absolute duration-200 ease-in-out `}
             >
                 <div
                     className="group relative transition-all duration-200 ease-in cursor-pointer hover:-translate-y-2"
@@ -128,7 +135,7 @@ const Folder = ({ color = "#ffcf80", items = [], className = "" }) => {
 
 function EmiCard() {
     return (
-        <div className="w-full p-8">
+        <div className="flex justify-center items-center max-w-5xl w-full h-full p-8">
             <div className=" grid grid-cols-[130px_1fr] bg-gray-50 w-full h-full border">
                 <div className="border border-red-800 rounded-full w-full h-full"></div>
                 <div className="text-center border border-green-800 w-full h-full">
@@ -142,8 +149,11 @@ function EmiCard() {
 const AboutPage = () => {
     return (
         <div className="grid grid-rows-[180px_1fr] h-full w-full">
-            <EmiCard />
-            <Folder color="#ffcf80" />
+            <div className="flex justify-center items-center">
+                <EmiCard />
+            </div>
+            <Folder color="#ffcf80" className={`hidden sm:flex`} size={3} />
+            <Folder color="#ffcf80" className={`flex sm:hidden`} size={2} />
         </div>
     );
 };

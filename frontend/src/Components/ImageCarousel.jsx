@@ -1,13 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
-// replace icons with your own if needed
-import {
-    FiCircle,
-    FiCode,
-    FiFileText,
-    FiLayers,
-    FiLayout,
-} from "react-icons/fi";
 
 const DEFAULT_ITEMS = [
     {
@@ -102,7 +94,7 @@ export default function FolderImages({
     items = DEFAULT_ITEMS,
     baseWidth = 500,
     autoplay = true,
-    autoplayDelay = 3000,
+    autoplayDelay = 2000,
     pauseOnHover = true,
     loop = true,
     round = false,
@@ -201,11 +193,11 @@ export default function FolderImages({
     return (
         <div
             ref={containerRef}
-            className={`relative overflow-hidden p-4 rounded-[12px] border bg-white border-[#222]`}
+            className={`relative overflow-hidden p-4 rounded-[12px] border bg-transparent border-[#222]`}
             style={{
                 width: `${baseWidth}px`,
                 height: `${baseWidth}px`,
-                minWidth: "100px", // Set this to whatever minimum size you want
+                minWidth: "100px",
                 minHeight: "100px",
             }}
         >
@@ -254,7 +246,7 @@ export default function FolderImages({
                                 <img
                                     src={item.filepath}
                                     draggable={false}
-                                    className="object-scale-down w-full h-full"
+                                    className="object-contain w-full h-full"
                                 />
                             </div>
                         </motion.div>

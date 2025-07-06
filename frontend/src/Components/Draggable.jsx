@@ -9,7 +9,7 @@ const Draggable = ({
     style,
     id,
     startingPos,
-    constrainToParent = true, // Option to disable boundary constraints
+    constrainToParent = true,
     ...props
 }) => {
     const [isDragging, setIsDragging] = useState(false);
