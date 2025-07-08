@@ -17,9 +17,9 @@ export const CartList = ({ addCheckoutButton = true, className }) => {
             className={`flex flex-col items-center p-8 font-semibold text-xl font-[helvetica] h-9/12 ${className}`}
         >
             Whats in your cart?
-            <div className="grid grid-cols-[minmax(200px,800px)]">
-                <div className="flex flex-col pb-4">
-                    {cart.length > 0 ? (
+            {cart.length > 0 ? (
+                <div className="grid grid-cols-[minmax(200px,800px)]">
+                    <div className="flex flex-col pb-4">
                         <div className="space-y-8">
                             {cart.map((cartItem, index) => {
                                 console.log("found item in cart:");
@@ -30,7 +30,7 @@ export const CartList = ({ addCheckoutButton = true, className }) => {
                                         className="flex justify-between py-4 items-center"
                                     >
                                         <div className="font-medium text-black text-xl font-[helvetica]">
-                                            {cartItem.title}
+                                            {cartItem.name}
                                         </div>
                                         <div className="flex flex-row">
                                             <button
@@ -43,10 +43,7 @@ export const CartList = ({ addCheckoutButton = true, className }) => {
                                             </button>
                                             <img
                                                 className="h-[60px] w-[60px] object-center"
-                                                src={
-                                                    cartItem.filepaths &&
-                                                    cartItem.filepaths[0]
-                                                }
+                                                src={cartItem.images[0].image}
                                             />
                                         </div>
                                     </div>
@@ -60,14 +57,14 @@ export const CartList = ({ addCheckoutButton = true, className }) => {
                                 </NavLink>
                             )}
                         </div>
-                    ) : (
-                        <p className="text-center max-w-[300px] font-light py-12 break-words whitespace-normal">
-                            Add something to your cart, we would greatly
-                            appreciate it :)
-                        </p>
-                    )}
+                    </div>{" "}
                 </div>
-            </div>
+            ) : (
+                <p className="text-center max-w-[300px] font-light py-12 ">
+                    Add something to your cart, we would greatly appreciate it
+                    :)
+                </p>
+            )}
         </div>
     );
 };

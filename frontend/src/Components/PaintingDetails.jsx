@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import useCart from "../Contexts/CartContext";
 
 const PaintingDetails = ({ paintingData }) => {
+    console.log(paintingData);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [dimensions, setDimensions] = useState("");
@@ -13,19 +14,10 @@ const PaintingDetails = ({ paintingData }) => {
     const [alreadyInCart, setAlreadyInCart] = useState(false);
 
     useEffect(() => {
-        if (
-            !paintingData ||
-            !paintingData.title ||
-            !paintingData.description ||
-            !paintingData.dimensions ||
-            !paintingData.cost ||
-            !paintingData.id
-        )
-            return;
-        setTitle(paintingData.title);
+        setTitle(paintingData.name);
         setDescription(paintingData.description);
-        setDimensions(paintingData.dimensions);
-        setCost(paintingData.cost);
+        setDimensions(`${paintingData.width} x ${paintingData.height}`);
+        setCost(paintingData.price);
         setId(paintingData.id);
         setAlreadyInCart(checkInCart(paintingData));
     }, [paintingData]);

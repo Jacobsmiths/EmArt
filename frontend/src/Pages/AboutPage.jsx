@@ -7,6 +7,7 @@ const Folder = ({
     items = [],
     className = "",
     size = 1,
+    paintings,
 }) => {
     const maxItems = 3;
     const papers = items.slice(0, maxItems);
@@ -61,7 +62,10 @@ const Folder = ({
                         >
                             X
                         </button>
-                        <FolderImages baseWidth={size * 150} />
+                        <FolderImages
+                            baseWidth={size * 150}
+                            items={paintings}
+                        />
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -147,13 +151,50 @@ function EmiCard() {
 }
 
 const AboutPage = () => {
+    const baseurl = import.meta.env.VITE_API_URL;
+    const [paintings, setPaintings] = useState([]);
+    useEffect(() => {
+        const fetchAboutPaintings = async () => {
+            try {
+                const response = await fetch(
+                    `${baseurl}/portfolio-paintings/`,
+                    { method: "GET" }
+                );
+                if (!response.ok) {
+                    console.log(await response.text());
+                    return;
+                }
+                const data = await response.json();
+
+                console.log(data);
+                const orderedNames = data
+                    .sort((a, b) => a.order - b.order)
+                    .map((item) => item.painting.images[0].image);
+                setPaintings(orderedNames);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAboutPaintings();
+    }, []);
+
     return (
         <div className="grid grid-rows-[180px_1fr] h-full w-full">
             <div className="flex justify-center items-center">
                 <EmiCard />
             </div>
-            <Folder color="#ffcf80" className={`hidden sm:flex`} size={3} />
-            <Folder color="#ffcf80" className={`flex sm:hidden`} size={2} />
+            <Folder
+                color="#ffcf80"
+                className={`hidden sm:flex`}
+                size={3}
+                paintings={paintings}
+            />
+            <Folder
+                color="#ffcf80"
+                className={`flex sm:hidden`}
+                size={2}
+                paintings={paintings}
+            />
         </div>
     );
 };

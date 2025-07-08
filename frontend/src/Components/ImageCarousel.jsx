@@ -1,97 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 
-const DEFAULT_ITEMS = [
-    {
-        filepath: "./test.jpg",
-        name: "painting1",
-        height: 10,
-        width: 18,
-        x: 25,
-        y: 25,
-        id: 1,
-    },
-    {
-        filepath: "./test2.jpg",
-        name: "painting2",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 2,
-    },
-    {
-        filepath: "./test.jpg",
-        name: "painting3",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 3,
-    },
-    {
-        filepath: "./test.jpg",
-        name: "painting4",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 4,
-    },
-    {
-        filepath: "./test2.jpg",
-        name: "painting5",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 5,
-    },
-    {
-        filepath: "./test2.jpg",
-        name: "painting6",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 6,
-    },
-    {
-        filepath: "./test2.jpg",
-        name: "painting7",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 7,
-    },
-    {
-        filepath: "./test2.jpg",
-        name: "painting10",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 10,
-    },
-    {
-        filepath: "./test2.jpg",
-        name: "painting11",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 11,
-    },
-];
-
 const DRAG_BUFFER = 0;
 const VELOCITY_THRESHOLD = 500;
 const GAP = 32;
 const SPRING_OPTIONS = { type: "spring", stiffness: 300, damping: 30 };
 
 export default function FolderImages({
-    items = DEFAULT_ITEMS,
+    items,
     baseWidth = 500,
     autoplay = true,
     autoplayDelay = 2000,
@@ -244,7 +160,7 @@ export default function FolderImages({
                         >
                             <div className={`flex justify-center`}>
                                 <img
-                                    src={item.filepath}
+                                    src={item}
                                     draggable={false}
                                     className="object-contain w-full h-full"
                                 />
