@@ -227,6 +227,49 @@ const AdminPage = () => {
         }
     };
 
+    const addToPortfolio = async (paintingData) => {
+        try {
+            const response = await fetch(`${baseurl}/portfolio-paintings/`, {
+                method: "POST",
+                body: JSON.stringify({
+                    portfolio: 1,
+                    painting: paintingData.paintingID,
+                    order: paintingData.order,
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Token ${token}`,
+                },
+            });
+            if (!response.ok) {
+                console.log(await response.text());
+                return;
+            }
+            const data = await response.json();
+            console.log(data);
+            await fetchPortfolioPaintings();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const removeFromPortfolio = async (paintingID) => {
+        try {
+            const response = await fetch(
+                `${baseurl}/portfolio-paintings/${paintingID}/`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    },
+                }
+            );
+            await fetchPortfolioPaintings();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     if (loading) {
         return <Spinner />;
     }
@@ -258,7 +301,12 @@ const AdminPage = () => {
                 removePainting={removePaintingFromGallery}
             />
             <div className="text-lg font-bold p-4">Portfolio Paintings</div>
-            <PortfolioForm portfolioPaintings={portfolioPaintings} />
+            <PortfolioForm
+                portfolioPaintings={portfolioPaintings}
+                paintings={paintings}
+                addToPortfolio={addToPortfolio}
+                removeFromPortfolio={removeFromPortfolio}
+            />
         </div>
     );
 };

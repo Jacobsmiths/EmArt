@@ -149,7 +149,6 @@ const Draggable = ({
 
     useEffect(() => {
         if (!dragRef.current || !startingPos) return;
-
         dragRef.current.style.left = `${startingPos.x}px`;
         dragRef.current.style.top = `${startingPos.y}px`;
     }, [startingPos]);

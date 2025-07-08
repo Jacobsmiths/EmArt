@@ -157,30 +157,28 @@ const Minimap = ({
                 }}
                 draggable={true}
             />
-            {Object.values(pictureData).map((painting) => (
+            {Object.values(pictureData).map((galleryPainting) => (
                 <div
-                    key={`minimap-${painting.id}`}
+                    key={`minimap-${galleryPainting.id}`}
                     className="absolute overflow-hidden"
                     style={{
                         height: `${
-                            (painting.height * INCH_TO_PIXELS) /
+                            (galleryPainting.painting.height * INCH_TO_PIXELS) /
                             PAINTING_SCALE /
                             MINIMAP_SCALE
                         }px`,
                         width: `${
-                            (painting.width * INCH_TO_PIXELS) /
+                            (galleryPainting.painting.width * INCH_TO_PIXELS) /
                             PAINTING_SCALE /
                             MINIMAP_SCALE
                         }px`,
-                        left: `${painting.x / MINIMAP_SCALE}px`,
-                        top: `${painting.y / MINIMAP_SCALE}px`,
+                        left: `${galleryPainting.Xpos / MINIMAP_SCALE}px`,
+                        top: `${galleryPainting.Ypos / MINIMAP_SCALE}px`,
                     }}
                 >
                     <img
-                        src={
-                            painting.filepath + `?v=${painting.x},${painting.y}`
-                        }
-                        alt={painting.name}
+                        src={galleryPainting.painting.images[0].image}
+                        alt={galleryPainting.painting.name}
                         className="w-full h-full object-cover pointer-events-none"
                         draggable={false}
                     />

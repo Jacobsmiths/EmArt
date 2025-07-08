@@ -101,7 +101,6 @@ const GalleryForm = ({
                     {/* Data Rows */}
                     <tbody>
                         {galleryPaintings.map((painting, index) => {
-                            console.log(painting);
                             const { Xpos, Ypos } = painting;
                             const name = painting.painting.name;
                             const sold = painting.painting.sold;
@@ -133,9 +132,9 @@ const GalleryForm = ({
                                             onClick={() =>
                                                 removePainting(painting.id)
                                             }
-                                            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
                                         >
-                                            Remove From Gallery
+                                            Remove
                                         </button>
                                     </td>
                                 </tr>

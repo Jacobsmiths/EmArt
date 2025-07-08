@@ -12,7 +12,7 @@ const GalleryPainting = ({ painting, className, style, ...props }) => {
             onMouseMove={() => setHasDragged(true)}
         >
             <NavLink
-                to={`/painting/${painting.id}`}
+                to={painting.sold ? "" : `/painting/${painting.id}`}
                 onClick={(e) => {
                     if (hasDragged) {
                         e.preventDefault();
@@ -22,7 +22,7 @@ const GalleryPainting = ({ painting, className, style, ...props }) => {
             >
                 <div className="z-10 bg-black/30 inset font-extrabold text-2xl text-white w-full h-full relative">
                     <img
-                        src={painting.filepath}
+                        src={painting.images[0].image}
                         {...props}
                         draggable="false"
                         className="h-full w-full object-fill"

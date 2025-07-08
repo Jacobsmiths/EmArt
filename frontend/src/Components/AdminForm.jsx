@@ -35,12 +35,12 @@ const AdminForm = ({
     const [painting, setPainting] = useState(null);
 
     const addToPaintings = (painting) => {
-        console.log(painting);
+        console.log("adding to paintings");
         addPainting(painting);
     };
 
     const onDelete = (paintingID) => {
-        console.log(paintingID);
+        console.log("deleting Painting");
         deletePainting(paintingID);
     };
 

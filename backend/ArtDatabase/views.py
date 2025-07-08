@@ -154,6 +154,21 @@ class PortfolioPaintingList(generics.ListCreateAPIView):
     queryset = PortfolioPainting.objects.all()
     serializer_class = PortfolioPaintingSerializer
 
+    def create(self, request, *args, **kwargs):
+        # Get the painting and gallery objects
+        painting = Painting.objects.get(id=request.data.get('painting'))
+        portfolio = Portfolio.objects.get(id=request.data.get('portfolio'))
+        
+        # Create the gallery painting
+        portfolio_painting = PortfolioPainting.objects.create(
+            paintings=painting,
+            portfolio=portfolio,
+            order=request.data.get('order', 0),
+        )
+        
+        serializer = self.get_serializer(portfolio_painting)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 # this gives us the specific details about paintings in the portfolio like order of painting
 class PortfolioPaintingDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

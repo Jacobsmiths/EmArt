@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
-import GalleryPainting from "../Components/GalleryPainting";
 import Minimap from "./Minimap";
 import GalleryView from "./GalleryView";
-import Draggable from "./Draggable";
+import Spinner from "./Spinner";
+import { useAuth } from "../Contexts/AuthContext";
 
 const Gallery = () => {
     const GALLERY_HEIGHT = 650;
@@ -10,57 +10,39 @@ const Gallery = () => {
     const PAINTING_SCALE = 8;
     const MINIMAP_SCALE = 15;
 
+    const baseurl = import.meta.env.VITE_API_URL;
+
     const minimapHeight = Math.floor(GALLERY_HEIGHT / MINIMAP_SCALE);
     const minimapWidth = Math.floor(GALLERY_WIDTH / MINIMAP_SCALE);
 
     const minimapRef = useRef(null);
     const galleryViewRef = useRef(null);
+    const { token, isAuthenticated } = useAuth();
 
     const [pictureData, setPictureData] = useState({});
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // const fetchPaintings = async () => {
-        //     try {
-        //         const response = await fetch("/api/Paintings", {
-        //             method: "GET",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //             },
-        //         });
-        //         const data = await response.json();
-        //         const paintingsById = Object.fromEntries(
-        //             data.map((painting) => [painting.id, painting])
-        //         );
-        //         console.log(paintingsById);
-        //         setPictureData(paintingsById);
-        //     } catch (err) {
-        //         console.error(err);
-        //     }
-        // };
-
-        // fetchPaintings();
-        setPictureData({
-            1: {
-                filepath: "./test.jpg",
-                name: "painting1",
-                height: 10,
-                width: 18,
-                x: 25,
-                y: 25,
-                id: 1,
-                sold: false,
-            },
-            2: {
-                filepath: "./test2.jpg",
-                name: "painting2",
-                height: 15,
-                width: 20,
-                x: 100,
-                y: 125,
-                id: 2,
-                sold: true,
-            },
-        });
+        const fetchPaintings = async () => {
+            try {
+                const response = await fetch(`${baseurl}/gallery-paintings/`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                const data = await response.json();
+                const paintingsById = Object.fromEntries(
+                    data.map((painting) => [painting.id, painting])
+                );
+                setPictureData(paintingsById);
+                setLoading(false);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        setLoading(true);
+        fetchPaintings();
     }, []);
 
     // this is because the gallery view was still scrolling up and down instead of horizontal
@@ -76,10 +58,45 @@ const Gallery = () => {
             ...prev,
             [id]: {
                 ...prev[id],
-                x,
-                y,
+                Xpos: x,
+                Ypos: y,
             },
         }));
+    };
+
+    const updatePositions = async () => {
+        setLoading(true);
+        try {
+            await Promise.all(
+                Object.values(pictureData).map(async (galleryPainting) => {
+                    const response = await fetch(
+                        `${baseurl}/gallery-paintings/${galleryPainting.id}/`,
+                        {
+                            method: "PUT",
+                            body: JSON.stringify({
+                                Xpos: galleryPainting.Xpos,
+                                Ypos: galleryPainting.Ypos,
+                            }),
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Token ${token}`,
+                            },
+                        }
+                    );
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error(
+                            `Failed to update ${galleryPainting.id}:`,
+                            errorText
+                        );
+                    }
+                })
+            );
+        } catch (err) {
+            console.error("Unexpected error:", err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -96,6 +113,19 @@ const Gallery = () => {
                 setPictureData={setPictureData}
                 onDrag={handleDrag}
             />
+            {isAuthenticated && (
+                <div className="w-full flex justify-end px-12">
+                    <button
+                        onClick={() => {
+                            console.log(pictureData);
+                            updatePositions();
+                        }}
+                        className="bg-green-400 font-bold text-white p-4 rounded-lg cursor-auto"
+                    >
+                        Update Positions
+                    </button>
+                </div>
+            )}
             <Minimap
                 PAINTING_SCALE={PAINTING_SCALE}
                 minimapRef={minimapRef}
@@ -107,7 +137,7 @@ const Gallery = () => {
                     height: `${minimapHeight}px`,
                 }}
                 pictureData={pictureData}
-            ></Minimap>
+            />
         </>
     );
 };

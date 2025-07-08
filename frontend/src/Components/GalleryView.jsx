@@ -49,29 +49,36 @@ const GalleryView = ({
 
         return () => {
             gallery.removeEventListener("wheel", handleScroll);
+            gallery.removeEventListener("touchstart", handleTouchStart);
+            gallery.removeEventListener("touchmove", handleTouchMove);
         };
     }, []);
 
     const galleryPaintings = () => {
-        return Object.values(pictureData).map((painting) => (
+        return Object.values(pictureData).map((galleryPainting) => (
             <Draggable
-                key={`${painting.id}`}
-                id={painting.id}
+                key={`${galleryPainting.id}`}
+                id={galleryPainting.id}
                 onDrag={(x, y, id) => {
                     onDrag(x, y, id);
                 }}
-                startingPos={{ x: painting.x, y: painting.y }}
+                startingPos={{
+                    x: galleryPainting.Xpos,
+                    y: galleryPainting.Ypos,
+                }}
                 draggable={isAuthenticated}
             >
                 <GalleryPainting
-                    painting={painting}
+                    painting={galleryPainting.painting}
                     container={galleryRef}
                     style={{
                         height: `${
-                            (painting.height * INCH_TO_PIXELS) / PAINTING_SCALE
+                            (galleryPainting.painting.height * INCH_TO_PIXELS) /
+                            PAINTING_SCALE
                         }px`,
                         width: `${
-                            (painting.width * INCH_TO_PIXELS) / PAINTING_SCALE
+                            (galleryPainting.painting.width * INCH_TO_PIXELS) /
+                            PAINTING_SCALE
                         }px`,
                     }}
                 />
