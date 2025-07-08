@@ -15,8 +15,22 @@ export function Input({ register, name, requirements, ...rest }) {
 export function Select({ register, name, options, requirements, ...rest }) {
     return (
         <select {...register(name, requirements)} {...rest}>
-            {options.map((option) => {
-                return <option value={option}>{option}</option>;
+            {options.map((option, idx) => {
+                // If it's a string, just use it as both value and label
+                if (typeof option === "string") {
+                    return (
+                        <option key={idx} value={option}>
+                            {option}
+                        </option>
+                    );
+                }
+
+                // If it's an object with value + label, use them properly
+                return (
+                    <option key={idx} value={option.value}>
+                        {option.label}
+                    </option>
+                );
             })}
         </select>
     );

@@ -7,12 +7,6 @@ export default defineConfig({
     plugins: [react(), tailwindcss()],
     server: {
         port: 8080,
-        proxy: {
-            "/api": {
-                target: "http://localhost:8000/",
-                changeOrigin: true,
-            },
-        },
     },
     build: {
         outDir: "/var/www/html",

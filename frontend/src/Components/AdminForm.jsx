@@ -3,8 +3,14 @@ import { useForm } from "react-hook-form";
 import AddToDatabase from "./AddToDatabase";
 import ModalBackdrop from "./ModalBackdrop";
 import useClickedOutside from "../hooks/useClickedOutside";
+import ManyImages from "./ManyImages";
 
-const AdminForm = ({ paintings, setPaintings }) => {
+const AdminForm = ({
+    paintings,
+    addPainting,
+    deletePainting,
+    updatePainting,
+}) => {
     const headers = [
         "Painting",
         "Description",
@@ -29,28 +35,13 @@ const AdminForm = ({ paintings, setPaintings }) => {
     const [painting, setPainting] = useState(null);
 
     const addToPaintings = (painting) => {
-        const format = painting.size.trim();
-        const fart = {
-            ...painting,
-            size: {
-                height: format.split("x")[0],
-                width: format.split("x")[1],
-            },
-            file: painting.images.map((image) => {
-                return image.name;
-            }),
-        };
-        console.log(fart);
-        setPaintings([...paintings, fart]);
+        console.log(painting);
+        addPainting(painting);
     };
 
-    // difference between this and addToPaintings is that these gaurenteed to have ids
-    const onSubmit = (data) => {
-        console.log("Form data:", data);
-    };
-
-    const onDelete = (data) => {
-        console.log(data);
+    const onDelete = (paintingID) => {
+        console.log(paintingID);
+        deletePainting(paintingID);
     };
 
     const paintingForm = (painting) => {
@@ -70,11 +61,11 @@ const AdminForm = ({ paintings, setPaintings }) => {
                             columns={columns}
                             onSubmit={(data) => {
                                 setPaintingFormFocused(false);
-                                onSubmit(data);
+                                updatePainting(data);
                             }}
                             defaultValues={{
                                 ...painting,
-                                size: `${painting.size.height} x ${painting.size.width}`,
+                                size: `${painting.height} x ${painting.width}`,
                             }}
                             onDelete={(data) => {
                                 setPaintingFormFocused(false);
@@ -90,7 +81,6 @@ const AdminForm = ({ paintings, setPaintings }) => {
                             }}
                             onDelete={(data) => {
                                 setPaintingFormFocused(false);
-                                onDelete(data);
                             }}
                         />
                     )}
@@ -126,10 +116,11 @@ const AdminForm = ({ paintings, setPaintings }) => {
                                 name,
                                 description,
                                 price,
-                                size,
+                                height,
+                                width,
                                 sold,
                                 forSale,
-                                filePaths,
+                                images,
                             } = painting;
                             const bg =
                                 index % 2 === 0 ? "bg-gray-50" : "bg-white";
@@ -138,11 +129,13 @@ const AdminForm = ({ paintings, setPaintings }) => {
                                     key={index}
                                     className={`${bg} border-b divide-x divide-gray-200 border-gray-200`}
                                 >
-                                    <td className="p-3">{name}</td>
+                                    <td className="p-3 text-center">{name}</td>
                                     <td className="p-3">{description}</td>
-                                    <td className="p-3 text-right">${price}</td>
                                     <td className="p-3 text-center">
-                                        {size.height} x {size.width}
+                                        ${price}
+                                    </td>
+                                    <td className="p-3 text-center">
+                                        {height} x {width}
                                     </td>
                                     <td className="p-3 text-center">
                                         <span
@@ -162,10 +155,12 @@ const AdminForm = ({ paintings, setPaintings }) => {
                                             }`}
                                         ></span>
                                     </td>
-                                    <td className="p-3 text-center text-gray-600 text-sm">
-                                        {filePaths?.length > 0
-                                            ? `${filePaths}`
-                                            : "No images"}
+                                    <td className="py-2 text-center text-gray-600 text-sm w-[200px]">
+                                        {images?.length > 0 ? (
+                                            <ManyImages images={images} />
+                                        ) : (
+                                            "No images"
+                                        )}
                                     </td>
                                     <td className="p-3 text-center">
                                         <button

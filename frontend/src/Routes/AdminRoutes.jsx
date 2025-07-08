@@ -2,11 +2,11 @@ import { Navigate, Outlet } from "react-router";
 import { useAuth } from "../Contexts/AuthContext";
 
 const AdminRoutes = () => {
-    const { isAuthenticated, userRoles } = useAuth();
+    const { isAuthenticated } = useAuth();
 
     if (isAuthenticated == null) return;
 
-    return isAuthenticated == true && userRoles.includes("Administrator") ? (
+    return isAuthenticated == true ? (
         <Outlet />
     ) : (
         <Navigate to="/" replace={true} />

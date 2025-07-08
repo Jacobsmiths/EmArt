@@ -38,7 +38,7 @@ const App = () => {
                     <Route path="/gallery" element={<Navigate to="/" />} />
                 </Route>
                 <Route path="/" element={<FooterlessLayout />}>
-                    <Route path="/register" element={<RegisterPage />} />
+                    {/* <Route path="/register" element={<RegisterPage />} /> */}
 
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="checkout" element={<CheckoutPage />} />

@@ -23,6 +23,9 @@ urlpatterns = [
     path('portfolio-paintings/', views.PortfolioPaintingList.as_view(), name='portfolio-painting-list'),
     path('portfolio-paintings/<int:pk>/', views.PortfolioPaintingDetail.as_view(), name='portfolio-painting-detail'),
 
+    path('painting-images/', views.PaintingImageList.as_view(), name='painting-image-list'),
+    path('painting-images/<int:pk>/', views.PaintingImageDetail.as_view(), name='painting-image-detail'),
+    
     #handles tokens
     path('api-token-auth/', obtain_auth_token, name='api-token-auth'),
 ]

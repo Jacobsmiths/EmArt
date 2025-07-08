@@ -8,7 +8,7 @@ from .models import (
 class PaintingImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaintingImage
-        fields = ['id', 'image', 'order']
+        fields = ['id', 'image', 'order', 'painting']
 
 class PaintingSerializer(serializers.ModelSerializer):
     images = PaintingImageSerializer(many=True, read_only=True)

@@ -15,7 +15,7 @@ const GalleryView = ({
 }) => {
     const INCH_TO_PIXELS = 96;
     const galleryRef = useRef(null);
-    const { isAuthenticated, userRoles } = useAuth();
+    const { isAuthenticated } = useAuth();
     const handleScroll = (e) => {
         if (!galleryViewRef.current) return;
         galleryViewRef.current.scrollLeft += e.deltaY;
@@ -61,12 +61,7 @@ const GalleryView = ({
                     onDrag(x, y, id);
                 }}
                 startingPos={{ x: painting.x, y: painting.y }}
-                draggable={
-                    isAuthenticated == true &&
-                    userRoles.includes("Administrator")
-                        ? true
-                        : false
-                }
+                draggable={isAuthenticated}
             >
                 <GalleryPainting
                     painting={painting}

@@ -55,25 +55,32 @@ const AddToDatabase = ({
 
             <label className="flex flex-col gap-1">
                 <span className="font-medium">Size</span>
-                <Input
-                    className="input w-40"
-                    placeholder="HxW"
-                    name="size"
-                    requirements={{
-                        required: "u forgot to add the size",
-                        pattern: {
-                            value: /^\d+\s*x\s*\d+$/,
-                            message: "must be of the form num x num e.g.(5x20)",
-                        },
-                    }}
-                />
+                <div className="flex flex-row">
+                    <Input
+                        className="input w-20 px-2"
+                        placeholder="Width"
+                        name="width"
+                        requirements={{
+                            required: "u forgot to add the size",
+                        }}
+                    />{" "}
+                    x{" "}
+                    <Input
+                        className="input w-20 px-2"
+                        placeholder="Height"
+                        name="height"
+                        requirements={{
+                            required: "u forgot to add the size",
+                        }}
+                    />
+                </div>
             </label>
 
             <div className="flex gap-6">
                 <label className="flex items-center gap-2">
                     <Input
                         type="checkbox"
-                        defaultChecked={false}
+                        // defaultChecked={false}
                         className="checkbox"
                         name="sold"
                     />
@@ -83,7 +90,7 @@ const AddToDatabase = ({
                 <label className="flex items-center gap-2">
                     <Input
                         type="checkbox"
-                        defaultChecked={true}
+                        // defaultChecked={true}
                         className="checkbox"
                         name="forSale"
                     />
@@ -164,8 +171,8 @@ const AddToDatabase = ({
                 <button
                     type="button"
                     className="w-fit self-center bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md text-sm transition-colors"
-                    onClick={(data) => {
-                        onDelete(data);
+                    onClick={() => {
+                        onDelete(defaultValues.id);
                     }}
                 >
                     Delete

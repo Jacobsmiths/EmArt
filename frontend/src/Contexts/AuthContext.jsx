@@ -5,32 +5,12 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
-    const [userId, setUserId] = useState(null);
     const [token, setToken] = useState(null);
-    const [userRoles, setUserRoles] = useState(null);
-
-    const fetchUserDetails = async () => {
-        try {
-            const tokenPayload = jwtDecode(token);
-            const roles =
-                tokenPayload[
-                    "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-                ];
-            setUserRoles(typeof roles === "string" ? [roles] : roles);
-            setIsAuthenticated(true);
-        } catch (error) {
-            console.error("Error decoding token:", error);
-            logout();
-        }
-    };
 
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
-        const storedUserId = localStorage.getItem("userId");
-
-        if (storedToken && storedUserId) {
+        if (storedToken) {
             setToken(storedToken);
-            setUserId(storedUserId);
         } else {
             setIsAuthenticated(false);
         }
@@ -38,23 +18,18 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         if (token) {
-            fetchUserDetails();
+            setIsAuthenticated(true);
         }
     }, [token]);
 
-    const login = (newToken, newUserId) => {
+    const login = (newToken) => {
         localStorage.setItem("token", newToken);
-        localStorage.setItem("userId", newUserId);
         setToken(newToken);
-        setUserId(newUserId);
     };
 
     const logout = () => {
         localStorage.removeItem("token");
-        localStorage.removeItem("userId");
         setToken(null);
-        setUserId(null);
-        setUserRoles(null);
         setIsAuthenticated(false);
     };
 
@@ -62,12 +37,10 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 isAuthenticated,
-                userId,
                 token,
-                userRoles,
+                setToken,
                 login,
                 logout,
-                fetchUserDetails,
             }}
         >
             {children}

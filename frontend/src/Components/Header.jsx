@@ -7,16 +7,10 @@ import Logotype from "./Logotype";
 const Header = () => {
     const navTabClass =
         "text-[#ff3cb2] hover:text-pink-600 transition-discrete duration-300 font-[helvetica] text-xl";
-    const navTabItems = ["Gallery", "Portfolio", "About", "Login", "Register"];
-    const adminNavTabItems = [
-        "Gallery",
-        "Portfolio",
-        "About",
-        "Login",
-        "Admin",
-    ];
+    const navTabItems = ["Gallery", "Portfolio", "About", "Login"];
+    const adminNavTabItems = ["Gallery", "Portfolio", "About", "Admin"];
     const [backgroundPosition, setBackgroundPosition] = useState(0);
-    const { isAuthenticated, userRoles } = useAuth();
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
         setBackgroundPosition(Math.floor(Math.random() * 5000));
@@ -41,19 +35,13 @@ const Header = () => {
                             className={"w-full h-full "}
                             navTabClass={navTabClass}
                             navTabItems={
-                                isAuthenticated &&
-                                userRoles.includes("Administrator")
-                                    ? adminNavTabItems
-                                    : navTabItems
+                                isAuthenticated ? adminNavTabItems : navTabItems
                             }
                         />
                         <MobileNavBar
                             navTabClass={navTabClass}
                             navTabItems={
-                                isAuthenticated &&
-                                userRoles.includes("Administrator")
-                                    ? adminNavTabItems
-                                    : navTabItems
+                                isAuthenticated ? adminNavTabItems : navTabItems
                             }
                             className="md:hidden flex justify-between mx-auto"
                         />
