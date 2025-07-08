@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import PopUp from "../Components/PopUp";
 import { AnimatePresence, motion } from "motion/react";
 import { RiArrowDropRightLine, RiArrowDropLeftLine } from "react-icons/ri";
+import Spinner from "../Components/Spinner";
 
 const PortfolioTile = ({ painting }) => {
     const [focused, setFocused] = useState(false);
@@ -22,9 +23,8 @@ const PortfolioTile = ({ painting }) => {
     };
 
     useEffect(() => {
-        if (!painting || !painting.filepath) return;
-        console.log(painting);
-        setImages(painting.filepath);
+        if (!painting || !painting.images) return;
+        setImages(painting.images);
     }, [painting]);
 
     return (
@@ -53,7 +53,7 @@ const PortfolioTile = ({ painting }) => {
                                 className="flex flex-row items-center justify-center px-12"
                                 onMouseDown={(e) => e.stopPropagation()}
                             >
-                                {painting.filepath.length > 1 && (
+                                {images.length > 1 && (
                                     <button
                                         onClick={handleLeftButton}
                                         className="m-4 h-[40px] w-[30px]  min-w-[30px] bg-gray-300/70 rounded-lg transition-all duration-300 ease-in-out cursor-pointer hover:bg-gray-200/70"
@@ -64,13 +64,13 @@ const PortfolioTile = ({ painting }) => {
 
                                 {/* Image */}
                                 <img
-                                    src={images[currentImage]}
+                                    src={images[currentImage].image}
                                     draggable="false"
-                                    className="object-contain h-full z-100 w-auto"
+                                    className="object-contain h-auto max-h-156 z-100 w-3xl"
                                     ref={imageRef}
                                 />
 
-                                {painting.filepath.length > 1 && (
+                                {images.length > 1 && (
                                     <button
                                         onClick={handleRightButton}
                                         className="m-4 h-[40px] w-[30px] min-w-[30px] bg-gray-300/70 rounded-lg transition-all duration-300 ease-in-out cursor-pointer hover:bg-gray-200/70"
@@ -104,7 +104,7 @@ const PortfolioTile = ({ painting }) => {
                             className="overflow-hidden border border-gray-300 hover:border-pink-400 cursor-pointer aspect-square"
                         >
                             <img
-                                src={painting.filepath[0]}
+                                src={painting.images[0].image}
                                 alt={painting.name}
                                 className="object-cover w-full h-full"
                                 draggable={false}
@@ -120,15 +120,33 @@ const PortfolioTile = ({ painting }) => {
 const ProductListings = () => {
     const [paintings, setPaintings] = useState([]);
     const [loading, setLoading] = useState(true);
+    const baseurl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        // Set paintings data
-        setPaintings(fart);
+        const fetchPortfolioPaintings = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch(`${baseurl}/paintings/`, {
+                    method: "GET",
+                    "Content-Type": "application/json",
+                });
+                if (!response.ok) {
+                    console.log(await response.text());
+                    return;
+                }
+                const data = await response.json();
+                console.log(data);
+                setPaintings(data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchPortfolioPaintings();
         setLoading(false);
     }, []);
 
     if (loading) {
-        return <div className="text-center p-8">Loading...</div>;
+        return <Spinner />;
     }
 
     return (
@@ -137,7 +155,7 @@ const ProductListings = () => {
                 Welcome to my Portfolio!
             </h1>
             <div className="px-2 flex justify-center">
-                <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
+                <div className="max-w-6xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
                     {paintings.map((painting) => (
                         <PortfolioTile painting={painting} key={painting.id} />
                     ))}
@@ -148,105 +166,3 @@ const ProductListings = () => {
 };
 
 export default ProductListings;
-
-const fart = [
-    {
-        filepath: ["./test.jpg"],
-        name: "painting1",
-        height: 10,
-        width: 18,
-        x: 25,
-        y: 25,
-        id: 1,
-    },
-    {
-        filepath: ["./test2.jpg", "./test.jpg"],
-        name: "painting2",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 2,
-    },
-    {
-        filepath: ["./test2.jpg"],
-        name: "painting3",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 3,
-    },
-    {
-        filepath: ["./test2.jpg"],
-        name: "painting4",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 4,
-    },
-    {
-        filepath: ["./test2.jpg"],
-        name: "painting5",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 5,
-    },
-    {
-        filepath: ["./test2.jpg"],
-        name: "painting6",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 6,
-    },
-    {
-        filepath: ["./test2.jpg"],
-        name: "painting7",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 7,
-    },
-    {
-        filepath: ["./test2.jpg"],
-        name: "painting8",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 8,
-    },
-    {
-        filepath: ["./test2.jpg"],
-        name: "painting9",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 9,
-    },
-    {
-        filepath: ["./test2.jpg"],
-        name: "painting10",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 10,
-    },
-    {
-        filepath: ["./test2.jpg"],
-        name: "painting11",
-        height: 15,
-        width: 20,
-        x: 100,
-        y: 125,
-        id: 11,
-    },
-];

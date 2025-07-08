@@ -34,14 +34,14 @@ const PopUp = ({ message, disabled = false, children, ...props }) => {
 
     return (
         <div
-            className={`relative ${props.className}`}
+            className={`relative  ${props.className}`}
             ref={containerRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseExit}
             onMouseMove={handleMouseOver}
         >
             <div ref={messageRef} className="absolute invisible">
-                message
+                {message}
             </div>
             <AnimatePresence>
                 {showPopUp && !disabled && (
@@ -50,8 +50,7 @@ const PopUp = ({ message, disabled = false, children, ...props }) => {
                         initial={{ scale: 0, opacity: 0 }}
                         exit={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className={`text-black p-1 rounded-sm text-sm border-1 border-black bg-gray-100/90 absolute z-20 
-                        }`}
+                        className={`text-black p-1 rounded-sm text-sm border-1 border-black bg-gray-100/90 absolute z-20 pointer-events-none whitespace-nowrap`}
                     >
                         {message}
                     </motion.div>
