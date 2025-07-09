@@ -46,7 +46,7 @@ const App = () => {
                     <Route path="/portfolio" element={<PortfolioPage />} />
                     <Route path="/view/:id" element={<ViewPaintingPage />} />
                     <Route element={<AdminRoutes />}>
-                        <Route path="/admin" element={<AdminPage />} />
+                        <Route path="/administration" element={<AdminPage />} />
                     </Route>
                 </Route>
             </>

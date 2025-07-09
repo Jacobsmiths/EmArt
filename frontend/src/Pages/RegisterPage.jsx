@@ -39,7 +39,7 @@ const RegisterPage = () => {
             login(data.token, data.userId);
             setIsRegistering(false);
             setSignupMessage("You have successfully logged in!");
-            navigate("/admin");
+            navigate("/administration");
         } catch (error) {
             console.error("Login failed:", error);
             setSignupMessage("Login failed. Please try again.");

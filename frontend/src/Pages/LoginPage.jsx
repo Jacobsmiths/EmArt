@@ -37,7 +37,7 @@ const LoginPage = () => {
             login(data.token);
             setIsRegistering(false);
             setSignupMessage("You have successfully logged in!");
-            navigate("/admin");
+            navigate("/administration");
         } catch (error) {
             console.error("Login failed:", error);
             setSignupMessage("Login failed. Please try again.");
@@ -46,7 +46,8 @@ const LoginPage = () => {
 
     return (
         <div className="flex flex-col justify-center items-center ">
-            <div className="w-md p-8 m-20 rounded-xl bg-fuchsia-300 border-2 border-fuchsia-500 shadow-md ">
+            <div className="w-md p-8 m-20 rounded-xl bg-fuchsia-300 border-2 border-fuchsia-500 shadow-md text-white font-bold">
+                Admin Only
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="mt-6 space-y-4"

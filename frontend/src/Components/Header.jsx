@@ -8,7 +8,12 @@ const Header = () => {
     const navTabClass =
         "text-[#ff3cb2] hover:text-pink-600 transition-discrete duration-300 font-[helvetica] text-xl";
     const navTabItems = ["Gallery", "Portfolio", "About", "Login"];
-    const adminNavTabItems = ["Gallery", "Portfolio", "About", "Admin"];
+    const adminNavTabItems = [
+        "Gallery",
+        "Portfolio",
+        "About",
+        "Administration",
+    ];
     const [backgroundPosition, setBackgroundPosition] = useState(0);
     const { isAuthenticated } = useAuth();
 

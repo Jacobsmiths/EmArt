@@ -109,7 +109,7 @@ export default function FolderImages({
     return (
         <div
             ref={containerRef}
-            className={`relative overflow-hidden p-4 rounded-[12px] border bg-transparent border-[#222]`}
+            className={`relative overflow-hidden p-4 rounded-[12px]  bg-transparent `}
             style={{
                 width: `${baseWidth}px`,
                 height: `${baseWidth}px`,

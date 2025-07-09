@@ -52,16 +52,6 @@ const Folder = ({
                         animate={{ opacity: 1, scale: 1 }}
                         className="relative translate-y-[-60px]"
                     >
-                        <button
-                            onClick={() => setOpen(false)}
-                            onMouseDown={() => setButtonDown(true)}
-                            onMouseUp={() => setButtonDown(false)}
-                            className={`border-[1px] flex text-center justify-center items-center absolute z-50 top-[-10px] right-[-2px]
-                        hover:bg-red-500 transition-all duration-200 hover:translate-y-[-2px] p-3 rounded-xl shadow-md bg-red-400 w-[16px] h-[16px] 
-                         ${buttonDown && "scale-90"}`}
-                        >
-                            X
-                        </button>
                         <FolderImages
                             baseWidth={size * 150}
                             items={paintings}
