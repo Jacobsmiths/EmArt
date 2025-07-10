@@ -46,8 +46,8 @@ const LoginPage = () => {
 
     return (
         <div className="flex flex-col justify-center items-center ">
-            <div className="w-md p-8 m-20 rounded-xl bg-fuchsia-300 border-2 border-fuchsia-500 shadow-md text-white font-bold">
-                Admin Only
+            <div className="w-md p-8 m-20 rounded-xl bg-fuchsia-300 border-2 border-fuchsia-500 shadow-md font-bold">
+                <div className="text-white">Admin Only</div>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="mt-6 space-y-4"
