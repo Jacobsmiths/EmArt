@@ -5,14 +5,17 @@ name = "pypi"
 
 [packages]
 django-admin = "*"
-django = "*"
 djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
 pillow = "*"
 django-cors-headers = "*"
+gunicorn = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.12"
+
+[pipenv]
+allow_prereleases = true
