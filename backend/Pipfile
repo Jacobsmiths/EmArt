@@ -12,6 +12,7 @@ pillow = "*"
 django-cors-headers = "*"
 gunicorn = "*"
 python-dotenv = "*"
+dotenv = "*"
 
 [dev-packages]
 

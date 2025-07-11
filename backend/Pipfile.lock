@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c043ad12d00ae5c9ccd072feb989de22977cc0b8eeb2c1cc524d401a90db25a0"
+            "sha256": "2d3f5f4057c12fbc8804e0ff09bfc71fc98790cd6c3820afe75ce8849ec2397d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -80,6 +80,13 @@
             "index": "pypi",
             "markers": "python_version >= '3.9'",
             "version": "==3.16.0"
+        },
+        "dotenv": {
+            "hashes": [
+                "sha256:29cf74a087b31dafdb5a446b6d7e11cbce8ed2741540e2339c69fbef92c94ce9"
+            ],
+            "index": "pypi",
+            "version": "==0.9.9"
         },
         "excel-base": {
             "hashes": [
