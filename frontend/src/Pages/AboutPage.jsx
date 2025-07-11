@@ -169,23 +169,26 @@ const AboutPage = () => {
     }, []);
 
     return (
-        <div className="grid grid-rows-[180px_1fr] h-full w-full">
-            <div className="flex justify-center items-center">
-                <EmiCard />
+        <>
+            <title>Emersons Art | About</title>
+            <div className="grid grid-rows-[180px_1fr] h-full w-full">
+                <div className="flex justify-center items-center">
+                    <EmiCard />
+                </div>
+                <Folder
+                    color="#ffcf80"
+                    className={`hidden sm:flex`}
+                    size={3}
+                    paintings={paintings}
+                />
+                <Folder
+                    color="#ffcf80"
+                    className={`flex sm:hidden`}
+                    size={2}
+                    paintings={paintings}
+                />
             </div>
-            <Folder
-                color="#ffcf80"
-                className={`hidden sm:flex`}
-                size={3}
-                paintings={paintings}
-            />
-            <Folder
-                color="#ffcf80"
-                className={`flex sm:hidden`}
-                size={2}
-                paintings={paintings}
-            />
-        </div>
+        </>
     );
 };
 

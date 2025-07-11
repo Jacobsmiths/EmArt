@@ -6,6 +6,7 @@ import { CartList } from "../Components/CartList";
 const CheckoutPage = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] h-full">
+            <title>Emersons Art | Checkout</title>
             <CheckoutForm />
             <CartSidebar />
             <CartList className="md:hidden flex" addCheckoutButton={false} />

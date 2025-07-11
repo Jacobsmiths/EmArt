@@ -45,54 +45,57 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center ">
-            <div className="w-md p-8 m-20 rounded-xl bg-fuchsia-300 border-2 border-fuchsia-500 shadow-md font-bold">
-                <div className="text-white">Admin Only</div>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="mt-6 space-y-4"
-                >
-                    <FormInput
-                        id="username"
-                        type="username"
-                        label="Username"
-                        disabled={isRegistering}
-                        error={errors.Email?.message}
-                        {...register("username", {
-                            required: "Username is required",
-                            // pattern: {
-                            //     value: /[A-Z0-9._%+-]/,
-                            //     message: "Invalid username address",
-                            // },
-                        })}
-                    />
-                    <FormInput
-                        id="password"
-                        type="password"
-                        label="Password"
-                        disabled={isRegistering}
-                        error={errors.Password?.message}
-                        {...register("password", {
-                            required: "Password is required",
-                        })}
-                    />
-
-                    <Button
-                        type="submit"
-                        loading={isRegistering}
-                        width="full"
-                        className="justify-self-center flex bg-fuchsia-500 hover:bg-fuchsia-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        <>
+            <title>Emersons Art | Login</title>
+            <div className="flex flex-col justify-center items-center ">
+                <div className="w-md p-8 m-20 rounded-xl bg-fuchsia-300 border-2 border-fuchsia-500 shadow-md font-bold">
+                    <div className="text-white">Admin Only</div>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="mt-6 space-y-4"
                     >
-                        Log In
-                    </Button>
-                    {signUpMessage && (
-                        <p className="mt-1 text-sm text-red-600">
-                            {signUpMessage}
-                        </p>
-                    )}
-                </form>
+                        <FormInput
+                            id="username"
+                            type="username"
+                            label="Username"
+                            disabled={isRegistering}
+                            error={errors.Email?.message}
+                            {...register("username", {
+                                required: "Username is required",
+                                // pattern: {
+                                //     value: /[A-Z0-9._%+-]/,
+                                //     message: "Invalid username address",
+                                // },
+                            })}
+                        />
+                        <FormInput
+                            id="password"
+                            type="password"
+                            label="Password"
+                            disabled={isRegistering}
+                            error={errors.Password?.message}
+                            {...register("password", {
+                                required: "Password is required",
+                            })}
+                        />
+
+                        <Button
+                            type="submit"
+                            loading={isRegistering}
+                            width="full"
+                            className="justify-self-center flex bg-fuchsia-500 hover:bg-fuchsia-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        >
+                            Log In
+                        </Button>
+                        {signUpMessage && (
+                            <p className="mt-1 text-sm text-red-600">
+                                {signUpMessage}
+                            </p>
+                        )}
+                    </form>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

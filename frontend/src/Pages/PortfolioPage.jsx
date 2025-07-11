@@ -151,6 +151,7 @@ const ProductListings = () => {
 
     return (
         <div>
+            <title>Emersons Art | Portflio</title>
             <h1 className="text-center font-semibold p-4">
                 Welcome to my Portfolio!
             </h1>

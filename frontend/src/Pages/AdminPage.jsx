@@ -275,39 +275,44 @@ const AdminPage = () => {
     }
 
     return (
-        <div className="grid grid-cols-[minmax(300px,1400px)] justify-center p-4">
-            <h1 className="text-center font-bold text-2xl p-4">Admin Page</h1>
-            <div className="flex justify-end p-4">
-                <button
-                    onClick={logout}
-                    className="bg-green-400 hover:bg-green-500 p-2 rounded-lg text-white font-bold transition-all duration-200"
-                >
-                    Logout
-                </button>
-            </div>
-            <div className="text-lg font-bold pb-4">All Paintings</div>
+        <>
+            <title>Emersons Art | Admin</title>
+            <div className="grid grid-cols-[minmax(300px,1400px)] justify-center p-4">
+                <h1 className="text-center font-bold text-2xl p-4">
+                    Admin Page
+                </h1>
+                <div className="flex justify-end p-4">
+                    <button
+                        onClick={logout}
+                        className="bg-green-400 hover:bg-green-500 p-2 rounded-lg text-white font-bold transition-all duration-200"
+                    >
+                        Logout
+                    </button>
+                </div>
+                <div className="text-lg font-bold pb-4">All Paintings</div>
 
-            <AdminForm
-                paintings={paintings}
-                addPainting={addPainting}
-                deletePainting={deletePainting}
-                updatePainting={updatePainting}
-            />
-            <div className="text-lg font-bold p-4">Gallery Paintings</div>
-            <GalleryForm
-                paintings={paintings}
-                galleryPaintings={galleryPaintings}
-                addToGallery={addPaintingToGallery}
-                removePainting={removePaintingFromGallery}
-            />
-            <div className="text-lg font-bold p-4">Portfolio Paintings</div>
-            <PortfolioForm
-                portfolioPaintings={portfolioPaintings}
-                paintings={paintings}
-                addToPortfolio={addToPortfolio}
-                removeFromPortfolio={removeFromPortfolio}
-            />
-        </div>
+                <AdminForm
+                    paintings={paintings}
+                    addPainting={addPainting}
+                    deletePainting={deletePainting}
+                    updatePainting={updatePainting}
+                />
+                <div className="text-lg font-bold p-4">Gallery Paintings</div>
+                <GalleryForm
+                    paintings={paintings}
+                    galleryPaintings={galleryPaintings}
+                    addToGallery={addPaintingToGallery}
+                    removePainting={removePaintingFromGallery}
+                />
+                <div className="text-lg font-bold p-4">Portfolio Paintings</div>
+                <PortfolioForm
+                    portfolioPaintings={portfolioPaintings}
+                    paintings={paintings}
+                    addToPortfolio={addToPortfolio}
+                    removeFromPortfolio={removeFromPortfolio}
+                />
+            </div>
+        </>
     );
 };
 

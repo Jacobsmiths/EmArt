@@ -37,13 +37,16 @@ const PaintingPage = () => {
     }
 
     return (
-        <div className="justify-center">
-            <SubHeader backRef={"/"} />
-            <div className="flex md:flex-row flex-col md:justify-center">
-                <MultiImageDisplay paintingData={paintingData} />
-                <PaintingDetails paintingData={paintingData} />
+        <>
+            <title>Emersons Art</title>
+            <div className="justify-center">
+                <SubHeader backRef={"/"} />
+                <div className="flex md:flex-row flex-col md:justify-center">
+                    <MultiImageDisplay paintingData={paintingData} />
+                    <PaintingDetails paintingData={paintingData} />
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
