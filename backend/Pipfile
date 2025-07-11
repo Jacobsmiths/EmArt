@@ -13,6 +13,7 @@ django-cors-headers = "*"
 gunicorn = "*"
 python-dotenv = "*"
 dotenv = "*"
+drf-api-logger = "*"
 
 [dev-packages]
 
