@@ -12,6 +12,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 import json
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 # Gives all paintings
 class PaintingList(generics.ListCreateAPIView):    
@@ -20,6 +24,7 @@ class PaintingList(generics.ListCreateAPIView):
     serializer_class = PaintingSerializer
 
     def post(self, request, *args, **kwargs):
+        logger.info("Posting to paintnig")
         # Create Painting object
         painting = Painting.objects.create(
             name=request.data.get("name"),
@@ -41,7 +46,6 @@ class PaintingList(generics.ListCreateAPIView):
                 image=file,
                 order=order
             )
-
         return Response({"message": "Painting and images created"}, status=status.HTTP_201_CREATED)
     
     
@@ -54,6 +58,8 @@ class PaintingDetail(generics.RetrieveUpdateDestroyAPIView):
     parser_classes = [MultiPartParser, FormParser]  # Required to handle FormData
 
     def put(self, request, *args, **kwargs):
+        logger.info("Putting to painting detail")
+
         # Get the existing painting object
         painting = self.get_object()
 
@@ -115,6 +121,7 @@ class GalleryPaintingList(generics.ListCreateAPIView):
     serializer_class = GalleryPaintingSerializer
 
     def create(self, request, *args, **kwargs):
+        logger.info("creating a gallery painting")
         # Get the painting and gallery objects
         painting = Painting.objects.get(id=request.data.get('painting'))
         gallery = Gallery.objects.get(id=request.data.get('gallery'))
@@ -155,6 +162,7 @@ class PortfolioPaintingList(generics.ListCreateAPIView):
     serializer_class = PortfolioPaintingSerializer
 
     def create(self, request, *args, **kwargs):
+        logger.info("creating a portfolio paintnig")
         # Get the painting and gallery objects
         painting = Painting.objects.get(id=request.data.get('painting'))
         portfolio = Portfolio.objects.get(id=request.data.get('portfolio'))
