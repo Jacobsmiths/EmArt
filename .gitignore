@@ -2,3 +2,4 @@ backend/.env
 backend/media
 frontend/.env.production
 frontend/.env.development
+backend/staticfiles
