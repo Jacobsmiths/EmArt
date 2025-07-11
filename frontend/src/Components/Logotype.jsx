@@ -7,7 +7,7 @@ const Logotype = ({ className }) => {
             <div className="flex flex-row items-center justify-center space-x-2 transition-all duration-300 ease-in-out">
                 <img
                     className="max-h-[40px] w-atuo rounded-sm border border-black"
-                    src="/src/assets/logo.jpg"
+                    src="/assets/logo.jpg"
                 />
                 <h1 className="font-[helvetica] text-[#ff3cb2] font-bold text-2xl hover:text-pink-600 hover:transition-colors duration-300">
                     Emersons Art Gallery
