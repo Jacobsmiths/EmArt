@@ -55,3 +55,10 @@ class PortfolioSerializer(serializers.ModelSerializer):
     def get_paintings(self, obj):
         portfolio_paintings = PortfolioPainting.objects.filter(portfolio=obj).order_by('order')
         return PortfolioPaintingSerializer(portfolio_paintings, many=True).data
+
+#the rest of thsi stuff is all testing for mfing stripe (stripe needs to charge less to use)
+class CheckoutSerializer(serializers.Serializer):
+    painting_ids = serializers.PrimaryKeyRelatedField(queryset=Painting.objects.all(), many=True)
+
+class CheckoutStatusSerializer(serializers.Serializer):
+    session_id = serializers.CharField(max_length=500, required=True)

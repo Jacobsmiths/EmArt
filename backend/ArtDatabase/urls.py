@@ -26,6 +26,11 @@ urlpatterns = [
     path('painting-images/', views.PaintingImageList.as_view(), name='painting-image-list'),
     path('painting-images/<int:pk>/', views.PaintingImageDetail.as_view(), name='painting-image-detail'),
     
+
+    path('create-checkout/', views.StripeCheckout.as_view(), name='stripe-checkout'),
+    path('session-status/', views.StipeCheckoutSession.as_view(), name='session-status'),
+
     #handles tokens
     path('api-token-auth/', obtain_auth_token, name='api-token-auth'),
+    
 ]

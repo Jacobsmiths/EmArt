@@ -22,8 +22,6 @@ export const CartList = ({ addCheckoutButton = true, className }) => {
                     <div className="flex flex-col pb-4">
                         <div className="space-y-8">
                             {cart.map((cartItem, index) => {
-                                console.log("found item in cart:");
-                                console.log(cartItem);
                                 return (
                                     <div
                                         key={cartItem.id || index}

@@ -19,18 +19,23 @@ import CheckoutPage from "./Pages/CheckoutPage";
 import CartPage from "./Pages/CartPage";
 import FooterlessLayout from "./Layouts/FooterlessLayout";
 import RegisterPage from "./Pages/RegisterPage";
+import ReturnPage from "./Pages/ReturnPage";
 import AboutPage from "./Pages/AboutPage";
 import PortfolioPage from "./Pages/PortfolioPage";
 import ViewPaintingPage from "./Pages/ViewPaintingPage";
+import { loadStripe } from "@stripe/stripe-js";
 
-// import { loadStripe } from "@stripe/stripe-js";
-// const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+const stripePromise = loadStripe(
+    // this is the test publishable key
+    "pk_test_51QWWzXP3msuX5JsQSplZGGjyhrOS45hW5DMNnmIlHfUri1nzUA4Jgx9a0SxMVtXRIHJT8ofwwjeyDuvjgaCMRPEk00oYLG2N4U"
+);
 
 const App = () => {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <>
                 <Route path="/" element={<MainLayout />}>
+                    <Route path="return" element={<ReturnPage />} />
                     <Route index element={<GalleryPage />} />
                     <Route path="cart" element={<CartPage />} />
                     <Route path="painting/:id" element={<PaintingPage />} />
@@ -39,9 +44,11 @@ const App = () => {
                 </Route>
                 <Route path="/" element={<FooterlessLayout />}>
                     {/* <Route path="/register" element={<RegisterPage />} /> */}
-
                     <Route path="/about" element={<AboutPage />} />
-                    <Route path="checkout" element={<CheckoutPage />} />
+                    <Route
+                        path="checkout"
+                        element={<CheckoutPage stripePromise={stripePromise} />}
+                    />
                     <Route path="login" element={<LoginPage />} />
                     <Route path="/portfolio" element={<PortfolioPage />} />
                     <Route path="/view/:id" element={<ViewPaintingPage />} />

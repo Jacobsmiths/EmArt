@@ -4,8 +4,10 @@ from ArtDatabase.models import (
 )
 from ArtDatabase.serializers import (
     PaintingSerializer, GallerySerializer, GalleryPaintingSerializer,
-    PortfolioSerializer, PortfolioPaintingSerializer,PaintingImageSerializer
+    PortfolioSerializer, PortfolioPaintingSerializer,PaintingImageSerializer, CheckoutSerializer,
+    CheckoutStatusSerializer,
 )
+from backend.settings import SECRET_STRIPE_KEY
 from rest_framework import generics, permissions
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import APIView
@@ -13,8 +15,14 @@ from rest_framework.response import Response
 from rest_framework import status
 import json
 import logging
+from dotenv import load_dotenv
+import os
+from djstripe import settings as djstripe_settings
+import stripe
 
-
+load_dotenv()
+stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
+print("apikey: " + str(djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY))
 logger = logging.getLogger(__name__)
 
 # Gives all paintings
@@ -162,7 +170,7 @@ class PortfolioPaintingList(generics.ListCreateAPIView):
     serializer_class = PortfolioPaintingSerializer
 
     def create(self, request, *args, **kwargs):
-        logger.info("creating a portfolio paintnig")
+        logger.info("creating a portfolio painting")
         # Get the painting and gallery objects
         painting = Painting.objects.get(id=request.data.get('painting'))
         portfolio = Portfolio.objects.get(id=request.data.get('portfolio'))
@@ -182,3 +190,66 @@ class PortfolioPaintingDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = PortfolioPainting.objects.all()
     serializer_class = PortfolioPaintingSerializer
+
+
+# more shizz with the stripe 
+class StripeCheckout(APIView):
+    permission_classes = [permissions.AllowAny]
+    checkoutSerializer = CheckoutSerializer
+    
+    def post(self, request, *args, **kwargs):
+        print(SECRET_STRIPE_KEY)
+        serializer = self.checkoutSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            print("validated data: " + str(serializer.validated_data))
+            line_items=[]
+            for painting in serializer.validated_data['painting_ids']:
+                print("painting: " + str(painting))
+                checkoutPrice = stripe.Price.create(
+                    currency="usd",
+                    unit_amount=int(painting.price * 100),
+                    product_data={ 
+                        "name":painting.name, 
+                        "active":not painting.sold
+                        },
+                    api_key= os.getenv("SECRET_STRIPE_KEY")
+                )
+                line_items.append({
+                    'price': checkoutPrice.id,
+                    'quantity': 1,
+                })
+
+            checkoutSession = stripe.checkout.Session.create(
+                ui_mode='embedded',
+                line_items=line_items,
+                mode='payment',
+                return_url=os.getenv("BASE_URL") + "/return?session_id={CHECKOUT_SESSION_ID}",
+                automatic_tax={'enabled':True},
+                api_key= os.getenv("SECRET_STRIPE_KEY")
+            )
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response({"clientSecret": checkoutSession.client_secret})    
+
+
+class StipeCheckoutSession(APIView):
+    permission_classes = [permissions.AllowAny]
+    checkoutStatusSerializer = CheckoutStatusSerializer
+
+    def get(self, request, *args, **kwargs):
+        statusSerializer = self.checkoutStatusSerializer(data=request.GET)
+
+        if not statusSerializer.is_valid():
+            return Response(statusSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        session = stripe.checkout.Session.retrieve(statusSerializer.validated_data['session_id'])
+        logger.info(f"session status: {session.status}, customer email: {session.customer_details.email}")
+        print(f"session status: {session.status}, customer email: {session.customer_details.email}")
+        return Response({
+            "status": session.status,
+            "customer_email": session.customer_details.email
+        })

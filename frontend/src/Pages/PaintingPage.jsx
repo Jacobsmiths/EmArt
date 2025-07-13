@@ -21,7 +21,6 @@ const PaintingPage = () => {
                     return;
                 }
                 const data = await response.json();
-                console.log(data);
                 setPaintingData(data);
                 setLoading(false);
             } catch (err) {

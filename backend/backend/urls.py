@@ -23,7 +23,8 @@ from ArtDatabase import urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/', include(urls))
+    path('api/', include(urls)),
+    path("stripe/", include("djstripe.urls", namespace="djstripe")),
 ]
 
 if settings.DEBUG:

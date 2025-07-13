@@ -26,10 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY", default="")
+SECRET_STRIPE_KEY = os.getenv("SECRET_STRIPE_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG_MODE", default="True")
 
-ALLOWED_HOSTS = ['emersons.art', 'www.emersons.art']
+ALLOWED_HOSTS = ['emersons.art', 'www.emersons.art', '127.0.0.1', 'localhost']
 
 CSRF_TRUSTED_ORIGINS = ['https://emersons.art', 'https://www.emersons.art']
 
@@ -54,7 +55,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'drf_api_logger',
+    'djstripe',
 ]
+
+ 
+STRIPE_LIVE_SECRET_KEY = os.getenv("STRIPE_LIVE_SECRET_KEY")
+STRIPE_TEST_SECRET_KEY = os.getenv("STRIPE_TEST_SECRET_KEY")
+STRIPE_LIVE_MODE = False  # Change to True in production
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,

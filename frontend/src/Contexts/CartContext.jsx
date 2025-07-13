@@ -7,7 +7,6 @@ export const CartProvider = ({ children }) => {
 
     const removeFromCart = (paintingItem) => {
         if (!cart) return;
-        console.log("removed item");
         setCart(
             cart.filter((item) => {
                 if (!paintingItem?.id) return;
@@ -18,12 +17,9 @@ export const CartProvider = ({ children }) => {
 
     const addToCart = (paintingItem) => {
         if (!cart && checkInCart(paintingItem)) {
-            console.log("item already in cart");
             return false;
         }
         setCart([...cart, paintingItem]);
-        console.log("added item");
-        console.log(paintingItem);
         return true;
     };
 
@@ -39,7 +35,7 @@ export const CartProvider = ({ children }) => {
 
     return (
         <CartContext.Provider
-            value={{ getCart, addToCart, removeFromCart, checkInCart }}
+            value={{ getCart, addToCart, removeFromCart, checkInCart, cart }}
         >
             {children}
         </CartContext.Provider>

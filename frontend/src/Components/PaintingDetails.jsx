@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import useCart from "../Contexts/CartContext";
 
 const PaintingDetails = ({ paintingData }) => {
-    console.log(paintingData);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [dimensions, setDimensions] = useState("");
