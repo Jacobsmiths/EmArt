@@ -4,23 +4,50 @@ import { useAuth } from "../Contexts/AuthContext";
 import Spinner from "../Components/Spinner";
 import GalleryForm from "../Components/GalleryForm";
 import PortfolioForm from "../Components/PortfolioForm";
+import PurchasesForm from "../Components/PurchasesForm";
 
 const AdminPage = () => {
     const [paintings, setPaintings] = useState([]);
     const [galleryPaintings, setGalleryPaintings] = useState([]);
     const [portfolioPaintings, setPortfolioPaintings] = useState([]);
+    const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [loading, setLoading] = useState(false);
     const { logout, token } = useAuth();
     const baseurl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const callApi = async () => {
+            await fetchPurchaseOrders();
             await fetchPaintings();
             await fetchGalleryPaintings();
             await fetchPortfolioPaintings();
         };
         callApi();
     }, []);
+
+    const fetchPurchaseOrders = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch(`${baseurl}/purchase-orders/`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Token ${token}`,
+                },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setPurchaseOrders(data);
+            } else {
+                console.error(await response.text());
+                logout(); // token might be invalid or expired
+            }
+        } catch (err) {
+            console.error("Fetch error:", err);
+            logout();
+        }
+        setLoading(false);
+    };
 
     const fetchPaintings = async () => {
         setLoading(true);
@@ -270,6 +297,23 @@ const AdminPage = () => {
         }
     };
 
+    const deletePurchase = async (purchaseID) => {
+        try {
+            const response = await fetch(
+                `${baseurl}/purchase-orders/${purchaseID}/`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    },
+                }
+            );
+            await fetchPurchaseOrders();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     if (loading) {
         return <Spinner />;
     }
@@ -289,8 +333,17 @@ const AdminPage = () => {
                         Logout
                     </button>
                 </div>
+                {purchaseOrders.length > 0 && (
+                    <div className="pb-4">
+                        <div className="text-lg font-bold p-4">Purchases</div>
+                        <PurchasesForm
+                            purchaseOrders={purchaseOrders}
+                            deletePurchase={deletePurchase}
+                            paintings={paintings}
+                        />
+                    </div>
+                )}
                 <div className="text-lg font-bold pb-4">All Paintings</div>
-
                 <AdminForm
                     paintings={paintings}
                     addPainting={addPainting}

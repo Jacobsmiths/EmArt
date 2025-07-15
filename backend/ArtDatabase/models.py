@@ -73,3 +73,14 @@ class PortfolioPainting(models.Model):
     def __str__(self):
         return f"Portfolio paintings: {self.paintings}"
     
+class PurchaseOrder(models.Model):
+    paintings = models.ManyToManyField(to=Painting,)
+    name = models.CharField(max_length=80)
+    address = models.CharField(max_length=200)
+    SHIPPING_METHOD_CHOICES = {"PU" : "pickup", "SD" : "standard"}
+    shipping_method =  models.CharField(max_length=2,choices=SHIPPING_METHOD_CHOICES)
+    date_ordered = models.DateField(auto_now_add=True)
+    stripe_session_id = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return f"Order {self.id} for {self.name} - {self.paintings} paintings"

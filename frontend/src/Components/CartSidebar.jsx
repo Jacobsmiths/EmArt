@@ -4,7 +4,7 @@ import { CartList } from "./CartList";
 
 const CartSidebar = () => {
     return (
-        <div className="justify-end h-full hidden md:flex">
+        <div className="justify-end h-full  md:flex hidden flex-row">
             <ResizeablePane
                 bgColor="bg-gray-150"
                 initialSize={325}

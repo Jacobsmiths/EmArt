@@ -26,9 +26,13 @@ urlpatterns = [
     path('painting-images/', views.PaintingImageList.as_view(), name='painting-image-list'),
     path('painting-images/<int:pk>/', views.PaintingImageDetail.as_view(), name='painting-image-detail'),
     
+    path('purchase-orders/', views.PurchaseOrderList.as_view(), name="purchase-orders"),
+    path('purchase-orders/<int:pk>/', views.PurchaseOrderDetail.as_view(), name="purchase-order-details"),
 
     path('create-checkout/', views.StripeCheckout.as_view(), name='stripe-checkout'),
     path('session-status/', views.StipeCheckoutSession.as_view(), name='session-status'),
+    path('validate-shipping/', views.StripeShipping.as_view(), name="stripe-shipping"),
+    path('payment-confirmed/', views.StripePaymentConfirmed.as_view(), name="stripe-payment-confirmed"),
 
     #handles tokens
     path('api-token-auth/', obtain_auth_token, name='api-token-auth'),

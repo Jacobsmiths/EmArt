@@ -2,7 +2,8 @@ from rest_framework import serializers
 from .models import (
     Painting, PaintingImage,
     Gallery, GalleryPainting,
-    Portfolio, PortfolioPainting
+    Portfolio, PortfolioPainting,
+    PurchaseOrder
 )
 
 class PaintingImageSerializer(serializers.ModelSerializer):
@@ -60,5 +61,11 @@ class PortfolioSerializer(serializers.ModelSerializer):
 class CheckoutSerializer(serializers.Serializer):
     painting_ids = serializers.PrimaryKeyRelatedField(queryset=Painting.objects.all(), many=True)
 
-class CheckoutStatusSerializer(serializers.Serializer):
+class CheckoutSessionSerializer(serializers.Serializer):
     session_id = serializers.CharField(max_length=500, required=True)
+
+class PurchaseOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PurchaseOrder
+        fields = ['id', 'paintings', 'name', 'address', 'shipping_method', 'date_ordered']
+

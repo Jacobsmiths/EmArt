@@ -1,20 +1,24 @@
 from ArtDatabase.models import (
     Painting, Gallery, GalleryPainting,
-    Portfolio, PortfolioPainting, PaintingImage
+    Portfolio, PortfolioPainting, PaintingImage, PurchaseOrder
 )
 from ArtDatabase.serializers import (
     PaintingSerializer, GallerySerializer, GalleryPaintingSerializer,
     PortfolioSerializer, PortfolioPaintingSerializer,PaintingImageSerializer, CheckoutSerializer,
-    CheckoutStatusSerializer,
+    CheckoutSessionSerializer, PurchaseOrderSerializer
 )
 from backend.settings import SECRET_STRIPE_KEY
+from backend.settings import STRIPE_WEBHOOK_SECRET
+from backend.settings import EMAIL_HOST_USER
 from rest_framework import generics, permissions
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.mail import send_mail
 import json
 import logging
+from django.db import transaction
 from dotenv import load_dotenv
 import os
 from djstripe import settings as djstripe_settings
@@ -22,8 +26,14 @@ import stripe
 
 load_dotenv()
 stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
-print("apikey: " + str(djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY))
+# endpoint_secret = STRIPE_WEBHOOK_SECRET  # from Stripe Dashboard
+endpoint_secret = 'whsec_5a99743ca76a95fd08d86c910f5e9be71d2493b0a7b3f6850e8f6652fc1844ea'
 logger = logging.getLogger(__name__)
+
+SHIPPING_RATE_DICT = {
+    "standard": 'shr_1RkuxBP3msuX5JsQmJsw7Oe4',
+    'pickup': 'shr_1RkvExP3msuX5JsQC4atgCNf'
+}
 
 # Gives all paintings
 class PaintingList(generics.ListCreateAPIView):    
@@ -191,6 +201,17 @@ class PortfolioPaintingDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = PortfolioPainting.objects.all()
     serializer_class = PortfolioPaintingSerializer
 
+# purchase order api stuff
+class PurchaseOrderList(generics.ListCreateAPIView):
+    permissions_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = PurchaseOrder.objects.all()
+    serializer_class = PurchaseOrderSerializer
+
+class PurchaseOrderDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = PurchaseOrder.objects.all()
+    serializer_class = PurchaseOrderSerializer
+
 
 # more shizz with the stripe 
 class StripeCheckout(APIView):
@@ -202,11 +223,13 @@ class StripeCheckout(APIView):
         serializer = self.checkoutSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        try:
-            print("validated data: " + str(serializer.validated_data))
+        try:        
+            print("validated data: " + str(serializer.validated_data['painting_ids']))
             line_items=[]
+            painting_ids = []
             for painting in serializer.validated_data['painting_ids']:
                 print("painting: " + str(painting))
+                painting_ids.append(painting.id)
                 checkoutPrice = stripe.Price.create(
                     currency="usd",
                     unit_amount=int(painting.price * 100),
@@ -220,14 +243,20 @@ class StripeCheckout(APIView):
                     'price': checkoutPrice.id,
                     'quantity': 1,
                 })
-
+            print(f"painting ids: {painting_ids}")
             checkoutSession = stripe.checkout.Session.create(
                 ui_mode='embedded',
                 line_items=line_items,
                 mode='payment',
                 return_url=os.getenv("BASE_URL") + "/return?session_id={CHECKOUT_SESSION_ID}",
                 automatic_tax={'enabled':True},
-                api_key= os.getenv("SECRET_STRIPE_KEY")
+                api_key= os.getenv("SECRET_STRIPE_KEY"),
+                shipping_address_collection= { "allowed_countries": ["US"] },
+                metadata={"ids":",".join(str(id) for id in painting_ids)},
+                shipping_options=[
+                    {"shipping_rate":SHIPPING_RATE_DICT["standard"]},
+                    {"shipping_rate": SHIPPING_RATE_DICT["pickup"]}
+                ]
             )
 
         except Exception as e:
@@ -238,7 +267,7 @@ class StripeCheckout(APIView):
 
 class StipeCheckoutSession(APIView):
     permission_classes = [permissions.AllowAny]
-    checkoutStatusSerializer = CheckoutStatusSerializer
+    checkoutStatusSerializer = CheckoutSessionSerializer
 
     def get(self, request, *args, **kwargs):
         statusSerializer = self.checkoutStatusSerializer(data=request.GET)
@@ -253,3 +282,84 @@ class StipeCheckoutSession(APIView):
             "status": session.status,
             "customer_email": session.customer_details.email
         })
+    
+class StripeShipping(APIView):
+    permission_classes = [permissions.AllowAny]
+    checkoutSessionSerializer = CheckoutSessionSerializer
+
+    def post(self, request, *args, **kwargs):
+        shippingSerializer = self.checkoutSessionSerializer(data=request.data.get("checkout_session_id"))
+        shipping_details = request.data.get("shipping_details", {})
+        address = shipping_details.get("address", {})
+        city = address.get("city")
+        zip_code = address.get("postal_code")
+
+        if not shippingSerializer.is_valid():
+            return Response(shippingSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        if city != "San Antonio":
+            return Response({
+                "type": "error",
+                "message": "Pickup is only available within San Antonio"
+            },
+            status=status.HTTP_400_BAD_REQUEST)
+
+        session = stripe.checkout.Session.retrieve(shippingSerializer.validated_data['session_id'])
+
+        return Response({"type": "success"})
+    
+class StripePaymentConfirmed(APIView):
+    permission_classes = [permissions.AllowAny]
+    pserial = PurchaseOrderSerializer
+
+    def post(self, request, *args, **kwargs):
+        po = self.pserial(data=request.body)
+        payload = request.body
+        sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
+        event = None
+
+        try:
+            if endpoint_secret:
+                event = stripe.Webhook.construct_event(
+                    payload, sig_header, endpoint_secret
+                )
+            else:
+                event = json.loads(payload)
+        except (ValueError, json.JSONDecodeError) as e:
+            return Response({'success': False}, status=status.HTTP_400_BAD_REQUEST)
+        except stripe.error.SignatureVerificationError as e:
+            return Response({'success': False}, status=status.HTTP_400_BAD_REQUEST)
+
+        if event['type'] == 'checkout.session.completed':
+            # get the session data and then make a purchase order object
+            session = event['data']['object']
+            painting_ids = list(map(int, session['metadata']['ids'].split(',')))
+            print(f"PRINTING {str(painting_ids)}")
+            name = session['shipping_details']['name']
+            address_data = session['shipping_details']['address']
+            address = f"{address_data.get('line1', '')}" \
+                f"{', ' + address_data['line2'] if address_data.get('line2') else ''}, " \
+                f"{address_data.get('city', '')}, " \
+                f"{address_data.get('state', '')} {address_data.get('postal_code', '')}, " \
+                f"{address_data.get('country', '')}"
+            shipping_method =  'SD' if SHIPPING_RATE_DICT['standard'] == session['shipping_cost']['shipping_rate'] else "PU"
+            checkout_session_id = session['id']
+
+            order = PurchaseOrder.objects.create(
+                name=name,
+                address=address,
+                shipping_method=shipping_method,
+                stripe_session_id=checkout_session_id,
+            )
+
+            order.paintings.set(Painting.objects.filter(id__in=painting_ids))
+            
+            # Update paintings BEFORE setting the relationship
+            Painting.objects.filter(id__in=painting_ids).update(sold=True, forSale=False)
+            
+            try:
+                send_mail("ART PURCHASE", "SOMEONE BOUGH ART", EMAIL_HOST_USER, ['jaco.smith589@gmail.com'])
+            except Exception as e:
+                print(f"Failed to send email cuz: {e}")
+
+        return Response({'success': True}, status=status.HTTP_200_OK)
