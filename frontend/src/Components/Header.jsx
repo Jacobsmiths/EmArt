@@ -24,7 +24,7 @@ const Header = () => {
     return (
         <nav
             className={
-                "outline transition-discrete duration-300 w-full h-20 hover:h-28 min-h-20"
+                "outline transition-discrete duration-300 w-full h-12 hover:h-20"
             }
         >
             <div
