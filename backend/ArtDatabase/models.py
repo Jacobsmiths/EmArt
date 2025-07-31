@@ -81,6 +81,6 @@ class PurchaseOrder(models.Model):
     shipping_method =  models.CharField(max_length=2,choices=SHIPPING_METHOD_CHOICES)
     date_ordered = models.DateField(auto_now_add=True)
     stripe_session_id = models.CharField(max_length=255, unique=True)
-
+    email = models.CharField(max_length=80, null=True)
     def __str__(self):
         return f"Order {self.id} for {self.name} - {self.paintings} paintings"

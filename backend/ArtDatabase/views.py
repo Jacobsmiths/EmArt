@@ -26,8 +26,7 @@ import stripe
 
 load_dotenv()
 stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
-# endpoint_secret = STRIPE_WEBHOOK_SECRET  # from Stripe Dashboard
-endpoint_secret = 'whsec_5a99743ca76a95fd08d86c910f5e9be71d2493b0a7b3f6850e8f6652fc1844ea'
+endpoint_secret = STRIPE_WEBHOOK_SECRET  # from Stripe Dashboard
 logger = logging.getLogger(__name__)
 
 SHIPPING_RATE_DICT = {
@@ -275,7 +274,7 @@ class StipeCheckoutSession(APIView):
         if not statusSerializer.is_valid():
             return Response(statusSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        session = stripe.checkout.Session.retrieve(statusSerializer.validated_data['session_id'])
+        session = stripe.checkout.Session.retrieve(statusSerializer.validated_data['session_id'], api_key=os.getenv("STRIPE_SECRET_KEY"))
         logger.info(f"session status: {session.status}, customer email: {session.customer_details.email}")
         print(f"session status: {session.status}, customer email: {session.customer_details.email}")
         return Response({
@@ -333,10 +332,11 @@ class StripePaymentConfirmed(APIView):
         if event['type'] == 'checkout.session.completed':
             # get the session data and then make a purchase order object
             session = event['data']['object']
+            print(str(session))
             painting_ids = list(map(int, session['metadata']['ids'].split(',')))
             print(f"PRINTING {str(painting_ids)}")
-            name = session['shipping_details']['name']
-            address_data = session['shipping_details']['address']
+            name = session['collected_information']['shipping_details']['name']
+            address_data = session['collected_information']['shipping_details']['address']
             address = f"{address_data.get('line1', '')}" \
                 f"{', ' + address_data['line2'] if address_data.get('line2') else ''}, " \
                 f"{address_data.get('city', '')}, " \
@@ -344,12 +344,14 @@ class StripePaymentConfirmed(APIView):
                 f"{address_data.get('country', '')}"
             shipping_method =  'SD' if SHIPPING_RATE_DICT['standard'] == session['shipping_cost']['shipping_rate'] else "PU"
             checkout_session_id = session['id']
+            email = session['customer_details']['email']
 
             order = PurchaseOrder.objects.create(
                 name=name,
                 address=address,
                 shipping_method=shipping_method,
                 stripe_session_id=checkout_session_id,
+                email=email,
             )
 
             order.paintings.set(Painting.objects.filter(id__in=painting_ids))
