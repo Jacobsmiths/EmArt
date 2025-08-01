@@ -9,9 +9,6 @@ export default defineConfig({
     exclude: ["node_modules"],
   },
   build: {
-    commonjsOptions: {
-      include: [/node_modules/],
-    },
     sourcemap: false,
     rollupOptions: {
       treeshake: true,
