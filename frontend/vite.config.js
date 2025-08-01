@@ -4,12 +4,22 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [react(), tailwindcss()],
-    server: {
-        port: 8080,
+  plugins: [react(), tailwindcss()],
+  optimizeDeps: {
+    exclude: ["react-icons"],
+  },
+  build: {
+    commonjsOptions: {
+      include: [/node_modules/],
     },
-    build: {
-        outDir: "/var/www/html",
-        emptyOutDir: true,
+    sourcemap: false,
+    rollupOptions: {
+      treeshake: true,
     },
+    outDir: "/var/www/html",
+    emptyOutDir: true,
+  },
+  server: {
+    port: 8080,
+  },
 });
