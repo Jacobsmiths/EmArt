@@ -1,17 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  optimizeDeps: {
-    exclude: ["react-icons", "framer-motion"],
-  },
+  plugins: [react(), tailwindcss()],
   build: {
-    sourcemap: false,
-    rollupOptions: {
-      treeshake: true,
-    },
-    outDir: "dist", // try relative path first
+    outDir: "/var/www/html",
     emptyOutDir: true,
   },
   server: {
