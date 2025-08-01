@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   optimizeDeps: {
-    exclude: ["react-icons", "framer-motion"],
+    exclude: ["node_modules"],
   },
   build: {
     commonjsOptions: {
