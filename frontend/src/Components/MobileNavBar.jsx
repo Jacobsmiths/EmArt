@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { IoIosClose } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 import useClickedOutside from "../hooks/useClickedOutside";
+import Button from "./Button";
 
 const MobileNavBar = ({ navTabClass, navTabItems, className, ...props }) => {
   const mobileMenuRef = useRef();
@@ -46,7 +47,7 @@ const MobileNavBar = ({ navTabClass, navTabItems, className, ...props }) => {
         </div>
 
         <div className="flex md:hidden">
-          <button
+          <Button
             onClick={() => {
               setShowMobileNav((prev) => !prev);
             }}
@@ -56,7 +57,7 @@ const MobileNavBar = ({ navTabClass, navTabItems, className, ...props }) => {
             ) : (
               <BiMenu className="text-pink-500" size={28} />
             )}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

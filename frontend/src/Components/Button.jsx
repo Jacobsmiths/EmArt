@@ -1,16 +1,19 @@
 import { NavLink } from "react-router";
+import { motion } from "motion/react";
 
-const Button = ({ href, icon, ...props }) => {
-    const Content = href ? "a" : "button";
-    const Icon = icon;
-
-    const component = (
-        <Content className={props.className}>
-            <div className="flex items-center">{props.children}</div>
-        </Content>
-    );
-
-    return href ? <NavLink to={href}>{component}</NavLink> : component;
+const Button = ({ href, ...props }) => {
+  return href ? (
+    <NavLink to={href}>
+      <a className={props.className}>{props.children}</a>
+    </NavLink>
+  ) : (
+    <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.8 }}
+      {...props}
+    >
+      {props.children}
+    </motion.button>
+  );
 };
-
 export default Button;

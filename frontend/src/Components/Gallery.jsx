@@ -3,6 +3,7 @@ import Minimap from "./Minimap";
 import GalleryView from "./GalleryView";
 import Spinner from "./Spinner";
 import { useAuth } from "../Contexts/AuthContext";
+import Button from "./Button";
 
 const Gallery = () => {
   const GALLERY_HEIGHT = 650;
@@ -96,6 +97,8 @@ const Gallery = () => {
     }
   };
 
+  if (loading) return <Spinner />;
+
   return (
     <>
       <GalleryView
@@ -112,7 +115,7 @@ const Gallery = () => {
       />
       {isAuthenticated && (
         <div className="w-full flex justify-end px-12">
-          <button
+          <Button
             onClick={() => {
               console.log(pictureData);
               updatePositions();
@@ -120,7 +123,7 @@ const Gallery = () => {
             className="bg-green-400 font-bold text-white p-4 rounded-lg cursor-auto"
           >
             Update Positions
-          </button>
+          </Button>
         </div>
       )}
       <Minimap
