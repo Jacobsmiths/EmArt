@@ -5,6 +5,7 @@ import Spinner from "../Components/Spinner";
 import GalleryForm from "../Components/GalleryForm";
 import PortfolioForm from "../Components/PortfolioForm";
 import PurchasesForm from "../Components/PurchasesForm";
+import Button from "../Components/Button";
 
 const AdminPage = () => {
   const [paintings, setPaintings] = useState([]);
