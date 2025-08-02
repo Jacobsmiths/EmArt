@@ -135,6 +135,7 @@ const ProductListings = () => {
         setLoading(false);
       } catch (err) {
         console.log(err);
+        setLoading(false);
       }
     };
     fetchPortfolioPaintings();
