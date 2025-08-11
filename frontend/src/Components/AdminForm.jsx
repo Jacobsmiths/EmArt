@@ -57,7 +57,6 @@ const AdminForm = ({
           </h1>
           {painting ? (
             <AddToDatabase
-              columns={columns}
               onSubmit={(data) => {
                 setPaintingFormFocused(false);
                 updatePainting(data);
@@ -73,7 +72,6 @@ const AdminForm = ({
             />
           ) : (
             <AddToDatabase
-              columns={columns}
               onSubmit={(data) => {
                 setPaintingFormFocused(false);
                 addToPaintings(data);
