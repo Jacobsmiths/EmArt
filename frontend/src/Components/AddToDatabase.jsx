@@ -11,13 +11,12 @@ const AddToDatabase = ({
   ...props
 }) => {
   const [images, setImages] = useState([]);
-  const [imageOrder, setImageOrder] = useState([]);
 
   return (
     <Form
       className={`bg-white p-8 shadow-md rounded-xl w-full max-w-2xl mx-auto space-y-6 ${className}`}
       onSubmit={(data) => {
-        onSubmit({ ...data, images: imageOrder });
+        onSubmit({ ...data, images: images });
       }}
       defaultValues={defaultValues}
     >

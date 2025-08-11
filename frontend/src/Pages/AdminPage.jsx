@@ -129,11 +129,10 @@ const AdminPage = () => {
         paintingData.images.forEach((file, i) => {
           formData.append("images", file);
         });
+	const metadata = paintingData.images.map((_, i) => ({ order: i }));
+        formData.append("image_metadata", JSON.stringify(metadata));
       }
-
-      const metadata = paintingData.images.map((_, i) => ({ order: i }));
-      formData.append("image_metadata", JSON.stringify(metadata));
-
+      
       console.log(formData);
       const response = await fetch(`${baseurl}/paintings/`, {
         method: "POST",
