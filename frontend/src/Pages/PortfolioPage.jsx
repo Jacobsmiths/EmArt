@@ -30,69 +30,67 @@ const PortfolioTile = ({ painting }) => {
     <div className="relative">
       <AnimatePresence>
         {focused ? (
-          <>
-            <Button
-              type="button"
-              onClick={() => setFocused(false)}
-              className="absolute top-4 right-4 flex items-center justify-center bg-gray-700/50 w-8 h-8 rounded-full text-white font-bold hover:bg-gray-600/70 transition"
-            >
-              X
-            </Button>
+          <motion.div
+            className="fixed inset-0 flex items-center justify-center bg-black/80 z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onMouseDown={() => setFocused(false)}
+          >
             <motion.div
-              className="fixed inset-0 flex items-center justify-center bg-black/80 z-50"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onMouseDown={() => setFocused(false)}
+              className="flex flex-col justify-center items-center"
+              initial={{ opacity: 0, scale: 1.1, y: 25 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 1.1, y: -25 }}
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 30,
+              }}
             >
-              <motion.div
-                className="flex flex-col justify-center items-center"
-                initial={{ opacity: 0, scale: 1.1, y: 25 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 1.1, y: -25 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 30,
-                }}
+              <Button
+                type="button"
+                onClick={() => setFocused(false)}
+                className="absolute top-4 right-4 flex items-center justify-center bg-gray-700/50 w-8 h-8 rounded-full text-white font-bold hover:bg-gray-600/70 transition"
               >
-                <div
-                  className="flex flex-row items-center justify-center px-12"
-                  onMouseDown={(e) => e.stopPropagation()}
-                >
-                  {images.length > 1 && (
-                    <Button
-                      onClick={handleLeftButton}
-                      className="m-4 h-[40px] w-[30px]  min-w-[30px] bg-gray-300/70 rounded-lg transition-all duration-300 ease-in-out cursor-pointer hover:bg-gray-200/70"
-                    >
-                      <RiArrowDropLeftLine className="h-full w-full" />
-                    </Button>
-                  )}
+                X
+              </Button>
+              <div
+                className="flex flex-row items-center justify-center px-12"
+                onMouseDown={(e) => e.stopPropagation()}
+              >
+                {images.length > 1 && (
+                  <Button
+                    onClick={handleLeftButton}
+                    className="m-4 h-[40px] w-[30px]  min-w-[30px] bg-gray-300/70 rounded-lg transition-all duration-300 ease-in-out cursor-pointer hover:bg-gray-200/70"
+                  >
+                    <RiArrowDropLeftLine className="h-full w-full" />
+                  </Button>
+                )}
 
-                  {/* Image */}
-                  <img
-                    src={images[currentImage].image}
-                    draggable="false"
-                    className="object-contain h-auto max-h-156 z-100 w-3xl"
-                    ref={imageRef}
-                  />
+                {/* Image */}
+                <img
+                  src={images[currentImage].image}
+                  draggable="false"
+                  className="object-contain h-auto max-h-156 z-100 w-3xl"
+                  ref={imageRef}
+                />
 
-                  {images.length > 1 && (
-                    <Button
-                      onClick={handleRightButton}
-                      className="m-4 h-[40px] w-[30px] min-w-[30px] bg-gray-300/70 rounded-lg transition-all duration-300 ease-in-out cursor-pointer hover:bg-gray-200/70"
-                    >
-                      <RiArrowDropRightLine className="h-full w-full" />
-                    </Button>
-                  )}
-                </div>
-                <div className="border border-gray-100 my-2 w-[140px] justify-center flex" />
-                <div className="font-extrabold text-2xl bg-transparent text-white z-200">
-                  {painting.name}
-                </div>
-              </motion.div>
+                {images.length > 1 && (
+                  <Button
+                    onClick={handleRightButton}
+                    className="m-4 h-[40px] w-[30px] min-w-[30px] bg-gray-300/70 rounded-lg transition-all duration-300 ease-in-out cursor-pointer hover:bg-gray-200/70"
+                  >
+                    <RiArrowDropRightLine className="h-full w-full" />
+                  </Button>
+                )}
+              </div>
+              <div className="border border-gray-100 my-2 w-[140px] justify-center flex" />
+              <div className="font-extrabold text-2xl bg-transparent text-white z-200">
+                {painting.name}
+              </div>
             </motion.div>
-          </>
+          </motion.div>
         ) : (
           <PopUp message={painting.name} key={painting.id} disabled={focused}>
             <motion.div
