@@ -51,7 +51,7 @@ const AdminForm = ({
         className=" flex items-center justify-center p-10 "
         ref={paintingFormRef}
       >
-        <div className="bg-white border rounded-2xl w-full max-w-3xl">
+        <div className="bg-white rounded-2xl w-full max-w-3xl">
           <h1 className="text-center font-bold text-2xl p-2">
             {painting ? "Edit Painting" : "Add Painting to Database"}
           </h1>

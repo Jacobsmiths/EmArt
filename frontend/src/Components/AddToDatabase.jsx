@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Form, Input } from "./Form";
 import Button from "./Button";
+import { IoIosAdd } from "react-icons/io";
 
 const AddToDatabase = ({
   className,
-  columns,
   onSubmit,
   onDelete,
   defaultValues,
@@ -18,11 +18,10 @@ const AddToDatabase = ({
       className={`bg-white p-8 shadow-md rounded-xl w-full max-w-2xl mx-auto space-y-6 ${className}`}
       onSubmit={(data) => {
         onSubmit({ ...data, images: imageOrder });
-
-        // setImages(imageOrder);
       }}
       defaultValues={defaultValues}
     >
+      {/* Painting Name */}
       <label className="flex flex-col gap-1">
         <span className="font-medium">Painting</span>
         <Input
@@ -33,6 +32,7 @@ const AddToDatabase = ({
         />
       </label>
 
+      {/* Description */}
       <label className="flex flex-col gap-1">
         <span className="font-medium">Description</span>
         <Input
@@ -43,6 +43,7 @@ const AddToDatabase = ({
         />
       </label>
 
+      {/* Price */}
       <label className="flex flex-col gap-1">
         <span className="font-medium">Price</span>
         <Input
@@ -54,118 +55,105 @@ const AddToDatabase = ({
         />
       </label>
 
+      {/* Size */}
       <label className="flex flex-col gap-1">
         <span className="font-medium">Size</span>
-        <div className="flex flex-row">
+        <div className="flex flex-row items-center gap-2">
           <Input
             className="input w-20 px-2"
             placeholder="Width"
             name="width"
-            requirements={{
-              required: "u forgot to add the size",
-            }}
-          />{" "}
-          x{" "}
+            requirements={{ required: "u forgot to add the size" }}
+          />
+          <span>x</span>
           <Input
             className="input w-20 px-2"
             placeholder="Height"
             name="height"
-            requirements={{
-              required: "u forgot to add the size",
-            }}
+            requirements={{ required: "u forgot to add the size" }}
           />
         </div>
       </label>
 
+      {/* Status Checkboxes */}
       <div className="flex gap-6">
         <label className="flex items-center gap-2">
-          <Input
-            type="checkbox"
-            // defaultChecked={false}
-            className="checkbox"
-            name="sold"
-          />
+          <Input type="checkbox" className="checkbox" name="sold" />
           <span className="text-sm">Sold</span>
         </label>
 
         <label className="flex items-center gap-2">
-          <Input
-            type="checkbox"
-            // defaultChecked={true}
-            className="checkbox"
-            name="forSale"
-          />
+          <Input type="checkbox" className="checkbox" name="forSale" />
           <span className="text-sm">For Sale</span>
         </label>
       </div>
 
+      {/* Image Upload */}
       <label className="flex flex-col gap-1">
-        <span className="font-medium">Images</span>
+        <span className="font-medium">
+          Images <span className="text-sm">(add images in order)</span>
+        </span>
+
+        {/* Image List */}
+        {images.length > 0 && (
+          <div className="flex flex-col gap-1 mt-4">
+            {images.map((image, index) => (
+              <div key={index} className="flex justify-between items-center">
+                {console.log(image)}
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt={image.name}
+                  className="w-20 h-20 object-cover rounded"
+                />
+                <Button
+                  type="button"
+                  onClick={() =>
+                    setImages((prev) => prev.filter((_, i) => i !== index))
+                  }
+                  className="bg-red-500 rounded-full w-8 h-8 text-center text-white font-bold"
+                >
+                  X
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Plus button */}
+        <button
+          type="button"
+          onClick={() => document.getElementById("imageUpload").click()}
+          className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-xl hover:bg-gray-300 transition"
+        >
+          <IoIosAdd size={20} />
+        </button>
+
+        {/* Hidden file input */}
         <Input
+          id="imageUpload"
           type="file"
-          multiple
           accept="image/*"
-          className="text-sm"
+          className="hidden"
           name="images"
           onChange={(e) => {
             const files = Array.from(e.target.files);
-            setImages(files);
+            setImages((prev) => [...prev, ...files]); // append instead of replace
           }}
         />
       </label>
 
-      {images.length > 0 && (
-        <div className="flex flex-col gap-2 mt-4">
-          <span className="font-medium">Select Images in Order:</span>
-          <div className="grid grid-cols-2 gap-2">
-            {images.map((image, index) => (
-              <label key={index} className="flex items-center gap-2">
-                <Input
-                  type="checkbox"
-                  className="checkbox"
-                  requirements={{ required: "*" }}
-                  value={image.name}
-                  name={image.name}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setImageOrder((prev) => [...prev, image]);
-                    } else {
-                      setImageOrder((prev) =>
-                        prev.filter((el) => el.name !== image.name)
-                      );
-                    }
-                  }}
-                />
-                <span className="text-sm">{image.name}</span>
-              </label>
-            ))}
-          </div>
-          {imageOrder.length > 0 && (
-            <div className="text-sm text-gray-600 mt-2">
-              <strong>Order:</strong>{" "}
-              {imageOrder.map((image, idx) => (
-                <span key={idx} className="mr-1">
-                  {image.name}
-                  {idx < imageOrder.length - 1 ? "," : ""}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-      <div className="flex justify-between">
+      {/* Action Buttons */}
+      <div className="flex space-x-2">
         <Button
           type="submit"
-          className="w-fit self-center bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md text-sm transition-colors"
+          className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-md text-sm transition-colors"
         >
           Add
         </Button>
         <Button
           type="button"
-          className="w-fit self-center bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md text-sm transition-colors"
-          onClick={() => {
-            onDelete(defaultValues.id);
-          }}
+          className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md text-sm transition-colors"
+          onClick={() => onDelete(defaultValues.id)}
         >
           Delete
         </Button>
