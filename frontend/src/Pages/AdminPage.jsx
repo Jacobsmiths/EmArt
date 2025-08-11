@@ -353,13 +353,13 @@ const AdminPage = () => {
           addToGallery={addPaintingToGallery}
           removePainting={removePaintingFromGallery}
         />
-        <div className="text-lg font-bold p-4">Portfolio Paintings</div>
+        {/* <div className="text-lg font-bold p-4">Portfolio Paintings</div>
         <PortfolioForm
           portfolioPaintings={portfolioPaintings}
           paintings={paintings}
           addToPortfolio={addToPortfolio}
           removeFromPortfolio={removeFromPortfolio}
-        />
+        /> */}
       </div>
     </>
   );

@@ -48,6 +48,13 @@ const PortfolioTile = ({ painting }) => {
                 damping: 30,
               }}
             >
+              <Button
+                type="button"
+                onClick={() => setFocused(false)}
+                className="absolute top-4 right-4 flex items-center justify-center bg-gray-700/50 w-8 h-8 rounded-full text-white font-bold hover:bg-gray-600/70 transition"
+              >
+                X
+              </Button>{" "}
               <div
                 className="flex flex-row items-center justify-center px-12"
                 onMouseDown={(e) => e.stopPropagation()}
