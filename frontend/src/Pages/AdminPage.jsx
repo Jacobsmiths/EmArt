@@ -125,14 +125,14 @@ const AdminPage = () => {
       formData.append("height", paintingData.height);
       formData.append("forSale", paintingData.forSale);
       formData.append("sold", paintingData.sold);
-      if (paintingData.images) {
+      if (paintingData.images.length > 0) {
         paintingData.images.forEach((file, i) => {
           formData.append("images", file);
         });
-	const metadata = paintingData.images.map((_, i) => ({ order: i }));
+        const metadata = paintingData.images.map((_, i) => ({ order: i }));
         formData.append("image_metadata", JSON.stringify(metadata));
       }
-      
+
       console.log(formData);
       const response = await fetch(`${baseurl}/paintings/`, {
         method: "POST",
