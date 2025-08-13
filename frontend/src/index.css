@@ -26,7 +26,7 @@
 } */
 
 .outline {
-    -webkit-text-stroke-width: 2.5px;
+    -webkit-text-stroke-width: 1.5px;
     paint-order: stroke fill;
     -webkit-text-stroke-color: black;
     font-weight: bold;

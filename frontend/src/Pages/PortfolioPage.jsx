@@ -37,6 +37,13 @@ const PortfolioTile = ({ painting }) => {
             exit={{ opacity: 0 }}
             onMouseDown={() => setFocused(false)}
           >
+            <button
+              type="button"
+              onClick={() => setFocused(false)}
+              className="absolute top-4 right-4 flex items-center justify-center bg-gray-100/70 w-8 h-8 rounded-full text-white font-bold hover:bg-white/80 transition"
+            >
+              X
+            </button>
             <motion.div
               className="flex flex-col justify-center items-center"
               initial={{ opacity: 0, scale: 1.1, y: 25 }}
@@ -48,13 +55,6 @@ const PortfolioTile = ({ painting }) => {
                 damping: 30,
               }}
             >
-              <button
-                type="button"
-                onClick={() => setFocused(false)}
-                className="absolute top-4 right-4 flex items-center justify-center bg-gray-100/70 w-8 h-8 rounded-full text-white font-bold hover:bg-white/50 transition"
-              >
-                X
-              </button>
               <div
                 className="flex flex-row items-center justify-center px-12"
                 onMouseDown={(e) => e.stopPropagation()}
@@ -85,8 +85,8 @@ const PortfolioTile = ({ painting }) => {
                   </button>
                 )}
               </div>
-              <div className="border border-gray-100 my-2 w-[140px] justify-center flex" />
-              <div className="font-extrabold text-2xl bg-transparent text-white z-200">
+              <div className="border border-gray-100 my-2 w-[180px] justify-center flex" />
+              <div className="font-extrabold text-2xl bg-transparent text-white z-200 text-center">
                 {painting.name}
               </div>
             </motion.div>

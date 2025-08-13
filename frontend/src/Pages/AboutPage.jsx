@@ -121,6 +121,16 @@ const Folder = ({
 };
 
 function EmiCard() {
+  const textElement = (
+    <p className="text-lg md:text-md text-gray-500">
+      I’m a multi-discipline, mixed-media artist with a BA in art and minor in
+      sociology. I focus mainly on oil and acrylic painting. My interests and
+      topics include self-discovery, politics, religion, and growth/change. In
+      addition to painting, I enjoy sculpture, collage, and graphite drawing.
+      Please reach out for any commission ideas or work!
+    </p>
+  );
+  
   return (
     <div className="max-w-4xl mx-auto mt-12 px-10">
       {/** HORIZONTAL BAR */}
@@ -128,16 +138,7 @@ function EmiCard() {
         <div className="w-32 relative flex-shrink-0 place-items-center">
           <img src={"/EmPic.jpg"} className="object-fit overflow-hidden" />
         </div>
-        <div className="flex flex-col gap-2 py-2 px-4">
-          <p className="text-gray-500">
-            I’m a multi-discipline, mixed-media artist with a BA in art and
-            minor in sociology. I focus mainly on oil and acrylic painting. My
-            interests and topics include self-discovery, politics, religion, and
-            growth/change. In addition to painting, I enjoy sculpture, collage,
-            and graphite drawing. Please reach out for any commission ideas or
-            work!
-          </p>
-        </div>
+        <div className="flex flex-col gap-2 py-2 px-4">{textElement}</div>
       </div>
 
       {/** VERTICAL BAR */}
@@ -148,14 +149,7 @@ function EmiCard() {
           <div className="border-1 border-gray-400 h-0" />
         </div>
         <div className="flex flex-col gap-2 bg-white border-gray-300 rounded-xl items-center shadow-sm py-4 px-8">
-          <p className="text-gray-500 text-md">
-            I’m a multi-discipline, mixed-media artist with a BA in art and
-            minor in sociology. I focus mainly on oil and acrylic painting. My
-            interests and topics include self-discovery, politics, religion, and
-            growth/change. In addition to painting, I enjoy sculpture, collage,
-            and graphite drawing. Please reach out for any commission ideas or
-            work!
-          </p>
+          {textElement}
         </div>
       </div>
     </div>
