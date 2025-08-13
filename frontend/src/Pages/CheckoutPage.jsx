@@ -10,16 +10,16 @@ const CheckoutPage = ({ stripePromise }) => {
 
       <SplitPane
         initialLeft={560} // tweak to taste
-        leftMin={360}
+        leftMin={500}
         rightMin={320}
-        className="bg-gray-200"
+        className="bg-gray-300"
         left={
           <div className="h-full p-4 overflow-auto">
             <CheckoutForm stripePromise={stripePromise} />
           </div>
         }
         right={
-          <div className="h-full p-4 bg-gray-50 overflow-auto">
+          <div className="h-full p-4 bg-gray-200 overflow-auto">
             <CartList addCheckoutButton={false} />
           </div>
         }
