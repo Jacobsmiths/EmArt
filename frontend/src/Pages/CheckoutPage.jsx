@@ -1,36 +1,29 @@
 import React from "react";
 import CheckoutForm from "../Components/CheckoutForm";
 import { CartList } from "../Components/CartList";
-import ResizeablePane from "../Components/ResizeablePane";
+import SplitPane from "../Components/SplitPane";
 
 const CheckoutPage = ({ stripePromise }) => {
   return (
-    <div className="h-full flex flex-col md:flex-row">
-      {/* Checkout Pane */}
-      <ResizeablePane
-        bgColor="bg-white"
-        initialSize={500}
-        minSize={300}
-        maxSize={800}
-        resizeSide="right"
-      >
-        <div className="p-4 h-full">
-          <CheckoutForm stripePromise={stripePromise} />
-        </div>
-      </ResizeablePane>
+    <div className="h-full">
+      <title>Emersons Art | Checkout</title>
 
-      {/* Cart Pane */}
-      <ResizeablePane
-        bgColor="bg-gray-150"
-        initialSize={325}
-        minSize={290}
-        maxSize={500}
-        resizeSide="left"
-      >
-        <div className="p-4 h-full">
-          <CartList addCheckoutButton={false} />
-        </div>
-      </ResizeablePane>
+      <SplitPane
+        initialLeft={560} // tweak to taste
+        leftMin={360}
+        rightMin={320}
+        className="bg-gray-200"
+        left={
+          <div className="h-full p-4 overflow-auto">
+            <CheckoutForm stripePromise={stripePromise} />
+          </div>
+        }
+        right={
+          <div className="h-full p-4 bg-gray-50 overflow-auto">
+            <CartList addCheckoutButton={false} />
+          </div>
+        }
+      />
     </div>
   );
 };
