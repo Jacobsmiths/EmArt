@@ -15,7 +15,7 @@ export const CartList = ({ addCheckoutButton = true, className }) => {
 
   return (
     <div
-      className={`flex flex-col items-center p-8 font-semibold text-xl font-[helvetica] h-9/12 ${className}`}
+      className={`flex flex-col items-center p-8 font-semibold text-xl font-playfair h-9/12 ${className}`}
     >
       Whats in your cart?
       {cart.length > 0 ? (
@@ -28,7 +28,7 @@ export const CartList = ({ addCheckoutButton = true, className }) => {
                     key={cartItem.id || index}
                     className="flex justify-between py-4 items-center"
                   >
-                    <div className="font-medium text-black text-xl font-[helvetica]">
+                    <div className="font-medium text-black text-xl font-playfair">
                       {cartItem.name}
                     </div>
                     <div className="flex flex-row">

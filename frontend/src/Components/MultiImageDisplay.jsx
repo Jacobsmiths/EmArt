@@ -46,9 +46,9 @@ const MultiImageDisplay = ({ paintingData }) => {
         {/* Left Hover Zone */}
         {images.length > 1 && (
           <div className="absolute left-0 top-0 w-1/4 h-full z-20 group">
-            <Button onClick={handleLeftButton}>
+            <button onClick={handleLeftButton}>
               <RiArrowDropLeftLine className="h-[30px] w-[20px] absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gray-300/70 rounded-lg opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300 ease-in-out cursor-pointer hover:bg-gray-200/70" />
-            </Button>
+            </button>
           </div>
         )}
 
@@ -63,9 +63,9 @@ const MultiImageDisplay = ({ paintingData }) => {
         {/* Right Hover Zone */}
         {images.length > 1 && (
           <div className="absolute right-0 top-0 w-1/4 h-full z-20 group">
-            <Button onClick={handleRightButton}>
+            <button onClick={handleRightButton}>
               <RiArrowDropRightLine className="h-[30px] w-[20px] absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gray-300/70 rounded-lg opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-300 ease-in-out cursor-pointer hover:bg-gray-200/70" />
-            </Button>
+            </button>
           </div>
         )}
       </div>

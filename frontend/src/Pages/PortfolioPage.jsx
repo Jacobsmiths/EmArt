@@ -60,12 +60,12 @@ const PortfolioTile = ({ painting }) => {
                 onMouseDown={(e) => e.stopPropagation()}
               >
                 {images.length > 1 && (
-                  <Button
+                  <button
                     onClick={handleLeftButton}
                     className="m-4 h-[40px] w-[30px]  min-w-[30px] bg-gray-300/70 rounded-lg transition-all duration-300 ease-in-out cursor-pointer hover:bg-gray-200/70"
                   >
                     <RiArrowDropLeftLine className="h-full w-full" />
-                  </Button>
+                  </button>
                 )}
 
                 {/* Image */}
@@ -77,12 +77,12 @@ const PortfolioTile = ({ painting }) => {
                 />
 
                 {images.length > 1 && (
-                  <Button
+                  <button
                     onClick={handleRightButton}
                     className="m-4 h-[40px] w-[30px] min-w-[30px] bg-gray-300/70 rounded-lg transition-all duration-300 ease-in-out cursor-pointer hover:bg-gray-200/70"
                   >
                     <RiArrowDropRightLine className="h-full w-full" />
-                  </Button>
+                  </button>
                 )}
               </div>
               <div className="border border-gray-100 my-2 w-[140px] justify-center flex" />

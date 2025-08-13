@@ -128,7 +128,7 @@ function EmiCard() {
         <div className="w-32 relative flex-shrink-0 place-items-center">
           <img src={"/EmPic.jpg"} className="object-fit overflow-hidden" />
         </div>
-        <div className="flex flex-col gap-2 py-2">
+        <div className="flex flex-col gap-2 py-2 px-4">
           <p className="text-gray-500">
             I’m a multi-discipline, mixed-media artist with a BA in art and
             minor in sociology. I focus mainly on oil and acrylic painting. My

@@ -22,39 +22,41 @@ const PaintingDetails = ({ paintingData }) => {
     setAlreadyInCart(checkInCart(paintingData));
   }, [paintingData]);
 
+  const checkoutElement =
+    addedToCart || alreadyInCart ? (
+      <>
+        {alreadyInCart && (
+          <p className="text-sm text-red-600">Item is already in cart</p>
+        )}
+        <NavLink to="/checkout">
+          <div className="cursor-pointer rounded-lg py-2 px-4 bg-blue-500 hover:bg-blue-600 transition-colors duration-150 text-white font-semibold">
+            Checkout
+          </div>
+        </NavLink>
+      </>
+    ) : (
+      <div>
+        <Button
+          onClick={() => {
+            if (addToCart(paintingData)) {
+              setAlreadyInCart(false);
+            }
+            setAddedToCart(true);
+          }}
+          className="cursor-pointer rounded-lg py-2 px-4 bg-blue-500 hover:bg-blue-600 transition-colors duration-150 text-white font-semibold"
+        >
+          Add to Cart
+        </Button>
+      </div>
+    );
+
   return (
     <div className="flex flex-col md:p-4 min-w-80 px-8 md:py-8 py-2 pb-8 md:items-start items-end space-y-2">
       <div className="font-bold text-2xl">{title}</div>
       <div>{`$${cost}`}</div>
       <div>{dimensions}</div>
       <div>{description}</div>
-
-      {addedToCart || alreadyInCart ? (
-        <>
-          {alreadyInCart && (
-            <p className="text-sm text-red-600">Item is already in cart</p>
-          )}
-          <NavLink to="/checkout">
-            <div className="cursor-pointer rounded-lg py-2 px-4 bg-blue-500 hover:bg-blue-600 transition-colors duration-150 text-white font-semibold">
-              Checkout
-            </div>
-          </NavLink>
-        </>
-      ) : (
-        <div>
-          <Button
-            onClick={() => {
-              if (addToCart(paintingData)) {
-                setAlreadyInCart(false);
-              }
-              setAddedToCart(true);
-            }}
-            className="cursor-pointer rounded-lg py-2 px-4 bg-blue-500 hover:bg-blue-600 transition-colors duration-150 text-white font-semibold"
-          >
-            Add to Cart
-          </Button>
-        </div>
-      )}
+      {sold ? <div>Sold</div> : { checkoutElement }}
     </div>
   );
 };

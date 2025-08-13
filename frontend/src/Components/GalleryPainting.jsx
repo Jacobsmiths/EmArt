@@ -12,7 +12,7 @@ const GalleryPainting = ({ painting, className, style, ...props }) => {
       onMouseMove={() => setHasDragged(true)}
     >
       <NavLink
-        to={painting.sold ? "" : `/painting/${painting.id}`}
+        to={`/painting/${painting.id}`}
         onClick={(e) => {
           if (hasDragged) {
             e.preventDefault();
@@ -28,7 +28,7 @@ const GalleryPainting = ({ painting, className, style, ...props }) => {
             className="h-full w-full object-fill"
           />
           {painting.sold && (
-            <div className="absolute left-0 top-0 w-full h-full flex justify-center items-center text-2xl font-extrabold text-white bg-black/50 z-60">
+            <div className="absolute left-0 top-0 w-full h-full flex justify-center items-center text-3xl font-extrabold text-white z-60">
               SOLD
             </div>
           )}
