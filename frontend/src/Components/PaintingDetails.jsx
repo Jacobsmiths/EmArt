@@ -58,7 +58,7 @@ const PaintingDetails = ({ paintingData }) => {
       <div>{`$${cost}`}</div>
       <div>{dimensions}</div>
       <div>{description}</div>
-      {sold ? <div className="font-bold">Sold</div> : { checkoutElement }}
+      {sold ? <div className="font-bold">Sold</div> : checkoutElement}
     </div>
   );
 };
