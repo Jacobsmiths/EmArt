@@ -12,6 +12,7 @@ const PaintingDetails = ({ paintingData }) => {
   const [addedToCart, setAddedToCart] = useState(false);
   const { addToCart, checkInCart } = useCart();
   const [alreadyInCart, setAlreadyInCart] = useState(false);
+  const [sold, setSold] = useState();
 
   useEffect(() => {
     setTitle(paintingData.name);
@@ -20,6 +21,7 @@ const PaintingDetails = ({ paintingData }) => {
     setCost(paintingData.price);
     setId(paintingData.id);
     setAlreadyInCart(checkInCart(paintingData));
+    setSold(paintingData.sold);
   }, [paintingData]);
 
   const checkoutElement =
@@ -56,7 +58,7 @@ const PaintingDetails = ({ paintingData }) => {
       <div>{`$${cost}`}</div>
       <div>{dimensions}</div>
       <div>{description}</div>
-      {sold ? <div>Sold</div> : { checkoutElement }}
+      {sold ? <div className="font-bold">Sold</div> : { checkoutElement }}
     </div>
   );
 };
