@@ -6,7 +6,7 @@ import { useAuth } from "../Contexts/AuthContext";
 import Logotype from "./Logotype";
 const Header = () => {
   const navTabClass =
-    "text-[#E0E722] hover:text-yellow-300 transition-discrete duration-300 font-playfair text-xl";
+    "text-yellow-300 hover:text-yellow-300 transition-discrete duration-300 font-playfair text-xl";
   const navTabItems = ["Gallery", "Portfolio", "About", "Login"];
   const adminNavTabItems = ["Gallery", "Portfolio", "About", "Administration"];
   const [backgroundPosition, setBackgroundPosition] = useState(0);
@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <nav
       className={
-        "outline transition-discrete duration-300 w-full h-12 hover:h-20"
+        "outline transition-discrete duration-300 w-full h-14 hover:h-20"
       }
     >
       <div

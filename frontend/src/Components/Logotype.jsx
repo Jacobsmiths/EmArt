@@ -9,7 +9,7 @@ const Logotype = ({ className }) => {
           className="max-h-[40px] w-atuo rounded-sm border border-black"
           src="/Faces.jpg"
         />
-        <h1 className="font-playfair text-[#E0E722] font-bold text-2xl hover:text-yellow-300 hover:transition-colors duration-300">
+        <h1 className="font-playfair text-yellow-300 font-bold text-2xl hover:text-yellow-300 hover:transition-colors duration-300">
           Emersons Art Gallery
         </h1>
       </div>

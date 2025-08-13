@@ -32,25 +32,25 @@ const GalleryView = ({
     let startX = 0;
     let scrollStart = 0;
 
-    const handleTouchStart = (e) => {
-      startX = e.touches[0].clientX;
-      scrollStart = galleryView.scrollLeft;
-    };
+    // const handleTouchStart = (e) => {
+    //   startX = e.touches[0].clientX;
+    //   scrollStart = galleryView.scrollLeft;
+    // };
 
-    const handleTouchMove = (e) => {
-      const currentX = e.touches[0].clientX;
-      const delta = currentX - startX;
-      galleryView.scrollLeft = scrollStart - delta;
-    };
+    // const handleTouchMove = (e) => {
+    //   const currentX = e.touches[0].clientX;
+    //   const delta = currentX - startX;
+    //   galleryView.scrollLeft = scrollStart - delta;
+    // };
 
     // gallery.addEventListener("wheel", handleScroll);
-    gallery.addEventListener("touchstart", handleTouchStart);
-    gallery.addEventListener("touchmove", handleTouchMove);
+    // gallery.addEventListener("touchstart", handleTouchStart);
+    // gallery.addEventListener("touchmove", handleTouchMove);
 
     return () => {
     //   gallery.removeEventListener("wheel", handleScroll);
-      gallery.removeEventListener("touchstart", handleTouchStart);
-      gallery.removeEventListener("touchmove", handleTouchMove);
+      // gallery.removeEventListener("touchstart", handleTouchStart);
+      // gallery.removeEventListener("touchmove", handleTouchMove);
     };
   }, []);
 

@@ -25,11 +25,11 @@ const MobileNavBar = ({ navTabClass, navTabItems, className, ...props }) => {
         >
           <div
             ref={mobileMenuRef}
-            className={`antioutline fixed right-0 top-0 h-full w-[120px] bg-gray-100 shadow-lg p-4 flex flex-col gap-4 transform transition-transform duration-300 ${
+            className={`outline fixed right-0 top-0 h-full w-[120px] bg-gray-100 shadow-lg p-4 flex flex-col gap-4 transform transition-transform duration-300 ${
               showMobileNav ? "translate-x-0" : "translate-x-full"
             }`}
           >
-            <div className="flex justify-center text-2xl font-bold antioutline text-pink-600">
+            <div className="flex justify-center text-2xl font-bold antioutline text-yellow-300">
               Menu
             </div>
             <div className="border"></div>
@@ -53,9 +53,9 @@ const MobileNavBar = ({ navTabClass, navTabItems, className, ...props }) => {
             }}
           >
             {showMobileNav ? (
-              <IoIosClose className="text-pink-500" size={28} />
+              <IoIosClose className="text-yellow-300 z-100" size={28} />
             ) : (
-              <BiMenu className="text-pink-500" size={28} />
+              <BiMenu className="text-yellow-300 " size={28} />
             )}
           </Button>
         </div>
