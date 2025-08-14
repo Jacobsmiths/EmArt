@@ -28,6 +28,7 @@ const ManyImages = ({ images }) => {
       <img
         src={images[currImage].image}
         className="h-[60px] w-[60px] object-cover"
+        loading="lazy"
       />
       {images.length > 1 && (
         <Button
