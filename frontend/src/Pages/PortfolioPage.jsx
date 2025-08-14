@@ -3,7 +3,6 @@ import PopUp from "../Components/PopUp";
 import { AnimatePresence, motion } from "motion/react";
 import { RiArrowDropRightLine, RiArrowDropLeftLine } from "react-icons/ri";
 import Spinner from "../Components/Spinner";
-import Button from "../Components/Button";
 
 const PortfolioTile = ({ painting }) => {
   const [focused, setFocused] = useState(false);
@@ -40,7 +39,7 @@ const PortfolioTile = ({ painting }) => {
             <button
               type="button"
               onClick={() => setFocused(false)}
-              className="absolute top-4 right-4 flex items-center justify-center bg-gray-100/70 w-8 h-8 rounded-full text-white font-bold hover:bg-white/80 transition"
+              className="absolute top-4 right-4 flex items-center justify-center bg-gray-100/40 w-8 h-8 rounded-full text-white font-bold hover:bg-white/60 transition"
             >
               X
             </button>
@@ -74,6 +73,7 @@ const PortfolioTile = ({ painting }) => {
                   draggable="false"
                   className="object-contain h-auto max-h-156 z-100 w-3xl"
                   ref={imageRef}
+                  loading="lazy"
                 />
 
                 {images.length > 1 && (
@@ -110,6 +110,7 @@ const PortfolioTile = ({ painting }) => {
                 alt={painting.name}
                 className="object-cover w-full h-full"
                 draggable={false}
+                loading="lazy"
               />
             </motion.div>
           </PopUp>

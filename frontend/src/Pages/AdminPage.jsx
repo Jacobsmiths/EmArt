@@ -117,6 +117,7 @@ const AdminPage = () => {
 
   const addPainting = async (paintingData) => {
     try {
+      setLoading(true);
       const formData = new FormData();
       formData.append("name", paintingData.name);
       formData.append("description", paintingData.description);
@@ -125,13 +126,13 @@ const AdminPage = () => {
       formData.append("height", paintingData.height);
       formData.append("forSale", paintingData.forSale);
       formData.append("sold", paintingData.sold);
-      if (paintingData.images.length > 0) {
-        paintingData.images.forEach((file, i) => {
-          formData.append("images", file);
-        });
-        const metadata = paintingData.images.map((_, i) => ({ order: i }));
-        formData.append("image_metadata", JSON.stringify(metadata));
-      }
+
+      paintingData.images.forEach((file, i) => {
+        formData.append("images", file);
+      });
+
+      const metadata = paintingData.images.map((_, i) => ({ order: i }));
+      formData.append("image_metadata", JSON.stringify(metadata));
 
       console.log(formData);
       const response = await fetch(`${baseurl}/paintings/`, {
@@ -148,16 +149,16 @@ const AdminPage = () => {
       const data = await response.json();
       console.log(data);
 
-      // this code links the images to the painting
-
       await fetchPaintings();
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
   };
 
   const deletePainting = async (paintingID) => {
     try {
+      setLoading(true);
       await fetch(`${baseurl}/paintings/${paintingID}/`, {
         method: "DELETE",
         headers: {
@@ -166,6 +167,7 @@ const AdminPage = () => {
       });
       await fetchPaintings();
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
   };
@@ -181,12 +183,13 @@ const AdminPage = () => {
       formData.append("forSale", paintingData.forSale);
       formData.append("sold", paintingData.sold);
 
-      paintingData.images.forEach((file, i) => {
-        formData.append("images", file);
-      });
-
-      const metadata = paintingData.images.map((_, i) => ({ order: i }));
-      formData.append("image_metadata", JSON.stringify(metadata));
+      if (paintingData.images.length > 0) {
+        paintingData.images.forEach((file, i) => {
+          formData.append("images", file);
+        });
+        const metadata = paintingData.images.map((_, i) => ({ order: i }));
+        formData.append("image_metadata", JSON.stringify(metadata));
+      }
 
       console.log(formData);
       const response = await fetch(`${baseurl}/paintings/${paintingData.id}/`, {
@@ -210,6 +213,7 @@ const AdminPage = () => {
 
   const addPaintingToGallery = async (paintingID) => {
     try {
+      setLoading(true);
       const response = await fetch(`${baseurl}/gallery-paintings/`, {
         method: "POST",
         body: JSON.stringify({
@@ -232,6 +236,7 @@ const AdminPage = () => {
       await fetchGalleryPaintings();
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 

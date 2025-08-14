@@ -6,7 +6,7 @@ import { useAuth } from "../Contexts/AuthContext";
 import Logotype from "./Logotype";
 const Header = () => {
   const navTabClass =
-    "text-yellow-300 hover:text-yellow-300 transition-discrete duration-300 font-playfair text-xl";
+    "text-[#CFFF04] transition-discrete duration-300 font-playfair text-xl font-";
   const navTabItems = ["Gallery", "Portfolio", "About", "Login"];
   const adminNavTabItems = ["Gallery", "Portfolio", "About", "Administration"];
   const [backgroundPosition, setBackgroundPosition] = useState(0);
@@ -29,7 +29,7 @@ const Header = () => {
         }}
       >
         <div className="flex flex-row justify-between items-center h-full px-6 ">
-          <Logotype className={"outline"} />
+          <Logotype className=" text-[#CFFF04] font-stretch-extra-expanded" />
           <div className="h-full flex items-center justify-center ">
             <NavBar
               className={"w-full h-full "}
