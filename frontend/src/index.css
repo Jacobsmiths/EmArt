@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
+@import "tailwindcss";
+
+/* Set Playfair Display as the default (base layer loads before utilities) */
+@layer base {
+  * {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* Ensure font-sans uses Tailwind's sans stack */
 @layer utilities {
   .font-sans {
-  font-family: var(--tw-font-sans) !important;
-}
-}
-
-* {
-    font-family: 'Playfair Display', serif;
-}
-
-.antifont {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    font-family: var(--tw-font-sans);
+  }
 }
 
 /* .font-playfair {

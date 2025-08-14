@@ -7,7 +7,7 @@ import Button from "./Button";
 
 const Gallery = () => {
   const GALLERY_HEIGHT = 650;
-  const GALLERY_WIDTH = 2500;
+  const GALLERY_WIDTH = 3000;
   const PAINTING_SCALE = 8;
   const MINIMAP_SCALE = 15;
 

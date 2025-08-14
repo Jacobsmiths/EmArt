@@ -10,7 +10,7 @@ const Logotype = ({ className }) => {
           src="/Faces.jpg"
         />
         <h1 className={`font-playfair  font-bold text-2xl ${className}`}>
-          Emersons Art Gallery
+          Emersons Art
         </h1>
       </div>
     </NavLink>

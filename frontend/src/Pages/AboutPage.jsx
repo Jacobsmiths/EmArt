@@ -43,6 +43,20 @@ function EmiCard() {
 
 const AboutPage = () => {
   const [copied, setCopied] = useState(false);
+  const socails = [
+    {
+      social: "Instagram",
+      link: "https://www.instagram.com/emersonsartgallery/",
+    },
+    {
+      social: "Twitch",
+      link: "https://m.twitch.tv/emersonsmithyy/home",
+    },
+    {
+      social: "Venmo",
+      link: "https://account.venmo.com/u/Emersonsmith379",
+    },
+  ];
 
   return (
     <>
