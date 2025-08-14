@@ -4,9 +4,6 @@
   .font-sans {
   font-family: var(--tw-font-sans) !important;
 }
-  .font-playfair {
-    font-family: 'Playfair Display', serif;
-  }
 }
 
 * {
