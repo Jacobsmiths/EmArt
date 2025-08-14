@@ -9,7 +9,7 @@ const CheckoutPage = ({ stripePromise }) => {
       <title>Emersons Art | Checkout</title>
 
       <SplitPane
-        initialLeft={1000} // tweak to taste
+        initialLeft={1100} // tweak to taste
         leftMin={500}
         rightMin={320}
         className="bg-gray-100"
