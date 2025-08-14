@@ -28,7 +28,7 @@ const GalleryPainting = ({ painting, className, style, ...props }) => {
             className="h-full w-full object-fill"
           />
           {painting.sold && (
-            <div className="absolute left-0 top-0 w-full h-full flex justify-center items-center text-3xl font-extrabold text-white z-60 font-antifont">
+            <div className="absolute left-0 top-0 w-full h-full flex justify-center items-center text-3xl font-extrabold text-[#CFFF04] z-60 font-antifont">
               SOLD
             </div>
           )}

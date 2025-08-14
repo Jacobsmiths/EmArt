@@ -39,7 +39,7 @@ const HomePage = () => {
             <div className="text-6xl md:text-8xl font-bold text-[#CFFF04] mb-10">
               Emersons Art
             </div>
-            <div className="flex flex-col justify-between gap-y-12 md:flex-row md:gap-x-12">
+            <div className="flex flex-col justify-between gap-y-12 md:flex-row md:gap-x-12 px-8">
               <div
                 className="bg-gray-500/10 bg-clip-padding backdrop-filter  backdrop-blur backdrop-saturate-100
                 backdrop-contrast-100 max-w-xl rounded-2xl text-white font-semibold text-xl px-8 py-4"
