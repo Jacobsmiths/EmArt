@@ -36,7 +36,7 @@ const HomePage = () => {
                 </div>
               </NavLink>
             </div>
-            <div className="text-6xl md:text-8xl font-bold text-[#CFFF04] mb-10">
+            <div className="text-6xl md:text-8xl font-bold text-[#39ff14] mb-10">
               Emersons Art
             </div>
             <div className="flex flex-col justify-between gap-y-12 md:flex-row md:gap-x-12 px-8">
