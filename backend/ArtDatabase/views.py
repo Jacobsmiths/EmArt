@@ -30,8 +30,8 @@ endpoint_secret = STRIPE_WEBHOOK_SECRET  # from Stripe Dashboard
 logger = logging.getLogger(__name__)
 
 SHIPPING_RATE_DICT = {
-    "standard": 'shr_1RkuxBP3msuX5JsQmJsw7Oe4',
-    'pickup': 'shr_1RkvExP3msuX5JsQC4atgCNf'
+    "standard": 'shr_1RkuxHP3msuX5JsQ1osRn4XC',
+    'pickup': 'shr_1RvsM9P3msuX5JsQLejCViCY'
 }
 
 # Gives all paintings
