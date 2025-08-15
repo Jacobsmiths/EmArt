@@ -371,7 +371,7 @@ class StripePaymentConfirmed(APIView):
                 send = SendGridAPIClient(os.getenv('SENDGRID_API_KEY'))
                 r = s.send(message)
 
-             except Exception as e:
+            except Exception as e:
                 print(f"Failed to send email cuz: {e}")
 
         return Response({'success': True}, status=status.HTTP_200_OK)
