@@ -53,9 +53,9 @@ const MobileNavBar = ({ navTabClass, navTabItems, className, ...props }) => {
             }}
           >
             {showMobileNav ? (
-              <IoIosClose className="text-[#CFFF04] z-100" size={28} />
+              <IoIosClose className="text-[#39ff14] z-100" size={28} />
             ) : (
-              <BiMenu className="text-[#CFFF04] " size={28} />
+              <BiMenu className="text-[#39ff14] " size={28} />
             )}
           </Button>
         </div>

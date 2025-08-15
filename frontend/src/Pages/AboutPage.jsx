@@ -105,10 +105,10 @@ const AboutPage = () => {
     <>
       <title>Emersons Art | About</title>
       {/* <div className="grid grid-rows-[180px_1fr] h-full w-full"> */}
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center mb-8">
         <EmiCard />
         <div className="max-w-4xl mx-auto mt-12 px-10 flex flex-col w-full">
-          <div className="flex flex-row gap-x-4 justify-end text-2xl px-2">
+          <div className="flex flex-row md:gap-x-4 justify-end md:text-2xl px-2 text-md gap-x-2">
             {socials.map((social, index) => {
               return (
                 <button onClick={() => setPage(index)}>
@@ -122,11 +122,11 @@ const AboutPage = () => {
             })}
           </div>
           <div
-            className={`h-32 z-100 transition-all duration-150 rounded-xl p-8 flex items-center ${socials[page].backgroundColor} ${socials[page].textColor}`}
+            className={`md:h-32 h-full z-20 transition-all duration-150 rounded-xl p-8 flex items-center ${socials[page].backgroundColor} ${socials[page].textColor}`}
           >
-            <div className="grid grid-cols-[1fr_100px] w-full">
+            <div className="md:grid md:grid-cols-[1fr_100px] w-full flex flex-col gap-y-4 md:gap-y-0">
               <p className="text-lg">{socials[page].text}</p>
-              <div className="w-24 h-24 flex items-center justify-center text-6xl ">
+              <div className="md:w-24 md:h-24 w-full h-full flex items-center justify-center md:text-6xl text-3xl">
                 <Button
                   href={socials[page].link || ""}
                   onClick={() => {
@@ -149,38 +149,6 @@ const AboutPage = () => {
               </div>
             </div>
           </div>
-          {/* 
-          <div className="hover:bg-gray-200 transition-all duration-100 rounded-full p-2">
-            <Button
-              href={"https://www.instagram.com/emersonsartgallery/"}
-            ></Button>
-          </div>
-          <div className="hover:bg-gray-200 transition-all duration-100 rounded-full p-2 relative">
-            <Button
-              onClick={() => {
-                navigator.clipboard
-                  .writeText("emersonsartgallery@gmail.com")
-                  .then(() => {
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 2000); // Hide tooltip after 2 seconds
-                  });
-              }}
-            >
-              {" "}
-              
-            </Button>
-            {copied && (
-              <p className="text-sm absolute left-0 text-center font-medium">
-                Email Copied!
-              </p>
-            )}
-          </div>
-          <div className="hover:bg-gray-200 transition-all duration-100 rounded-full p-2">
-            <Button href="https://m.twitch.tv/emersonsmithyy/home"></Button>
-          </div>
-          <div className="hover:bg-gray-200 transition-all duration-100 rounded-full p-2">
-            <Button href="https://account.venmo.com/u/Emersonsmith379"></Button>
-          </div> */}
         </div>
       </div>
     </>
