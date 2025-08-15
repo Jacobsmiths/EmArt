@@ -3,3 +3,4 @@ backend/media
 frontend/.env.production
 frontend/.env.development
 backend/staticfiles
+backend/sendgrid.env
