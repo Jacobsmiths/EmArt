@@ -23,6 +23,9 @@ from dotenv import load_dotenv
 import os
 from djstripe import settings as djstripe_settings
 import stripe
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 
 load_dotenv()
 stripe.api_key = djstripe_settings.djstripe_settings.STRIPE_SECRET_KEY
@@ -358,10 +361,17 @@ class StripePaymentConfirmed(APIView):
             
             # Update paintings BEFORE setting the relationship
             Painting.objects.filter(id__in=painting_ids).update(sold=True, forSale=False)
-            
+            message = Mail(
+                    from_email='jaco.smith589@gmail.com',
+                    to_emails='emersonsartgallery@gmail.com',
+                    subject='Someone bought art',
+                    html_content='<p>this is not a drill someone has bought art</p>'
+                )
             try:
-                send_mail("ART PURCHASE", "SOMEONE BOUGH ART", EMAIL_HOST_USER, ['jaco.smith589@gmail.com'])
-            except Exception as e:
+                send = SendGridAPIClient(os.getenv('SENDGRID_API_KEY'))
+                r = s.send(message)
+
+             except Exception as e:
                 print(f"Failed to send email cuz: {e}")
 
         return Response({'success': True}, status=status.HTTP_200_OK)
