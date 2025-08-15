@@ -103,7 +103,7 @@ const PortfolioTile = ({ painting }) => {
                 damping: 25,
               }}
               onClick={() => setFocused(true)}
-              className="overflow-hidden border border-gray-300 hover:border-pink-400 cursor-pointer aspect-square"
+              className="overflow-hidden border border-gray-300 hover:border-[#39ff14] cursor-pointer aspect-square"
             >
               <img
                 src={painting.images[0].image}

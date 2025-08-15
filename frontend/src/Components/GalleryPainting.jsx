@@ -6,7 +6,7 @@ const GalleryPainting = ({ painting, className, style, ...props }) => {
 
   return (
     <div
-      className="border-2 border-transparent hover:border-pink-400"
+      className="border-2 border-transparent hover:border-[#39ff14]"
       style={style}
       onMouseDown={() => setHasDragged(false)}
       onMouseMove={() => setHasDragged(true)}

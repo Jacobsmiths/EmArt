@@ -31,9 +31,9 @@ const MultiImageDisplay = ({ paintingData }) => {
           <Button key={index} onClick={() => setCurrentImage(index)}>
             <img
               src={image}
-              className={`rounded-sm w-[60px] h-[60px] object-cover hover:bg-pink-200 ${
+              className={`rounded-sm w-[60px] h-[60px] object-cover hover:bg-green-200 ${
                 currentImage === index
-                  ? "border-2 border-pink-300 p-0.5"
+                  ? "border-2 border-green-400 p-0.5"
                   : "p-1"
               }`}
             />
