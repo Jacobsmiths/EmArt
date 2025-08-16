@@ -81,7 +81,7 @@ const AboutPage = () => {
       icon: <FaInstagram />,
       text: "Keep up to date with all my works in progress in my highlights, and follow to keep up with me!",
       textColor: "text-white",
-      backgroundColor: "bg-[#E1306C]",
+      backgroundColor: "bg-pink-400",
     },
     {
       social: "Twitch",
@@ -89,7 +89,7 @@ const AboutPage = () => {
       icon: <FaTwitch />,
       text: "Follow me on twitch to be notified when I paint live!",
       textColor: "text-white",
-      backgroundColor: "bg-[#9146FF]",
+      backgroundColor: "bg-orange-400",
     },
     {
       social: "Venmo",
@@ -97,7 +97,7 @@ const AboutPage = () => {
       icon: <IoLogoVenmo />,
       text: "Donate to me through my Venmo :)",
       textColor: "text-white",
-      backgroundColor: "bg-[#008CFF]",
+      backgroundColor: "bg-yellow-400",
     },
   ];
 
@@ -122,7 +122,7 @@ const AboutPage = () => {
             })}
           </div>
           <div
-            className={`md:h-32 h-full z-20 transition-all duration-150 rounded-xl p-8 flex items-center ${socials[page].backgroundColor} ${socials[page].textColor}`}
+            className={`md:h-32 h-full z-20 transition-all duration-150 rounded-b-xl rounded-l-xl p-8 flex items-center ${socials[page].backgroundColor} ${socials[page].textColor}`}
           >
             <div className="md:grid md:grid-cols-[1fr_100px] w-full flex flex-col gap-y-4 md:gap-y-0">
               <p className="text-lg">{socials[page].text}</p>
