@@ -33,7 +33,7 @@ endpoint_secret = STRIPE_WEBHOOK_SECRET  # from Stripe Dashboard
 logger = logging.getLogger(__name__)
 
 SHIPPING_RATE_DICT = {
-    "standard": 'shr_1RkuxHP3msuX5JsQ1osRn4XC',
+    "standard": 'shr_1RwbJFP3msuX5JsQM1wRrJnO',
     'pickup': 'shr_1RvsM9P3msuX5JsQLejCViCY'
 }
 
@@ -277,7 +277,7 @@ class StipeCheckoutSession(APIView):
         if not statusSerializer.is_valid():
             return Response(statusSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        session = stripe.checkout.Session.retrieve(statusSerializer.validated_data['session_id'], api_key=os.getenv("STRIPE_SECRET_KEY"))
+        session = stripe.checkout.Session.retrieve(statusSerializer.validated_data['session_id'], api_key=os.getenv("SECRET_STRIPE_KEY"))
         logger.info(f"session status: {session.status}, customer email: {session.customer_details.email}")
         print(f"session status: {session.status}, customer email: {session.customer_details.email}")
         return Response({
