@@ -22,7 +22,7 @@ function EmiCard() {
       {/** HORIZONTAL BAR */}
       <div className="hidden sm:flex gap-3 bg-white border border-gray-300 rounded-xl overflow-hidden items-center justify-start shadow-sm">
         <div className="w-32 relative flex-shrink-0 place-items-center">
-          <img src={"/EmPic.jpg"} className="object-fit overflow-hidden" />
+          <img src={"/EmPic2.jpg"} className="object-fit overflow-hidden" />
         </div>
         <div className="flex flex-col gap-2 py-2 px-4">{textElement}</div>
       </div>
@@ -31,7 +31,7 @@ function EmiCard() {
       <div className="flex flex-col gap-y-2 max-w-sm sm:hidden items-center">
         <div className="grid grid-cols-[32px_120px_32px] gap-2 items-center justify-center w-[184px]">
           <div className="border-1 border-gray-400 h-0" />
-          <img src={"/EmPic.jpg"} className="object-fit rounded-full w-28" />
+          <img src={"/EmPic2.jpg"} className="object-fit rounded-full w-28" />
           <div className="border-1 border-gray-400 h-0" />
         </div>
         <div className="flex flex-col gap-2 bg-white border-gray-300 rounded-xl items-center shadow-sm py-4 px-8">
